@@ -2,7 +2,6 @@ package DAO;
 
 import model.User;
 
-import java.security.Principal;
 import java.util.List;
 
 public interface userDao {
@@ -10,9 +9,11 @@ public interface userDao {
 
     User findByEmail(String email);
 
-    void save(User user);
+    boolean save(User user);
 
-    void update(User user);
+    boolean update(User user);
+
+    boolean delete(int id);
 
     List<User> getAllUser();
 }

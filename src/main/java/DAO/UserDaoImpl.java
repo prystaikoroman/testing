@@ -12,7 +12,9 @@ import java.util.List;
 import static util.EmptyResources.close;
 
 public class UserDaoImpl implements userDao {
-    private static final String SQL_SELECT_ALL_USER = "SELECT * FROM USER WHERE id != 0";
+    private static final String SQL_SELECT_ALL_USER = "SELECT * FROM USER WHERE id != ?  LIMIT ?, ?";
+    private static final String SQL_SELECT_USER_BY_LOGIN = "SELECT * FROM USER WHERE login = ? ";
+    private static final String SQL_SELECT_USER_ROWS_COUNT = "SELECT COUNT(id) AS cnt FROM USER";
     private static final String SQL_INSERT_INTO_USER =
             "INSERT into USER  " +
                     "(login, email, lastname, password, admin, locked) " +
@@ -20,8 +22,8 @@ public class UserDaoImpl implements userDao {
                     " (?, ?, ?, ?, ?, ?) ";
     private static final String SQL_UPDATE_USER =
             "UPDATE USER SET " +
-            "login = ?, email = ?, lastname = ?, password = ?, admin = ?, locked = ? " +
-            "where id = ?";
+                    "login = ?, email = ?, lastname = ?, password = ?, admin = ?, locked = ? " +
+                    "where id = ?";
     private static final String SQL_DELETE_USER = "DELETE FROM USER WHERE id = ?";
     private static final DataSource ds = DSInstance.getInstance().getDs();
     private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
@@ -36,6 +38,35 @@ public class UserDaoImpl implements userDao {
     @Override
     public User findByEmail(String email) {
         return null;
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        User user = null;
+        final int count;
+        try {
+            con = ds.getConnection();
+            pstmt = con.prepareStatement(SQL_SELECT_USER_BY_LOGIN);
+            pstmt.setString(1, login);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                user = extractUser(rs);
+                return user;
+            }
+            logger.info("Selected user ==> " + user + " .");
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
+            close(con, logger);
+            close(pstmt, logger);
+            close(rs, logger);
+        }
+        return user;
+
     }
 
     @Override
@@ -87,7 +118,7 @@ public class UserDaoImpl implements userDao {
             pstmt.setBoolean(6, user.getLocked());
             pstmt.setInt(7, user.getId());
             count = pstmt.executeUpdate();
-            logger.info("update#Executed" );
+            logger.info("update#Executed");
             if (count > 0) {
                 logger.info("user = " + user.getLogin() + ". DB updated");
                 return true;
@@ -116,7 +147,7 @@ public class UserDaoImpl implements userDao {
 
             pstmt.setInt(1, id);
             count = pstmt.executeUpdate();
-            logger.info("update#Executed" );
+            logger.info("update#Executed");
             if (count > 0) {
                 logger.info("user id = " + id + ". DB deleted");
                 return true;
@@ -133,27 +164,62 @@ public class UserDaoImpl implements userDao {
     }
 
     @Override
-    public List<User> getAllUser() {
+    public List<User> getAllUser(int id, int currentPage, int recordsPerPage) {
         Connection con = null;
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
+        int start = currentPage * recordsPerPage - recordsPerPage;
+
         List<User> users = new ArrayList<>();
+        final int count;
         try {
             con = ds.getConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(SQL_SELECT_ALL_USER);
+            pstmt = con.prepareStatement(SQL_SELECT_ALL_USER);
+            pstmt.setInt(1, id);
+            pstmt.setInt(2, start);
+            pstmt.setInt(3, recordsPerPage);
+            rs = pstmt.executeQuery();
             while (rs.next()) {
                 users.add(extractUser(rs));
             }
-logger.info("Selected users ==> " +  users.size() + " counts.");
+            logger.info("Selected users ==> " + users.size() + " counts.");
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
+        } finally {
+            close(con, logger);
+            close(pstmt, logger);
+            close(rs, logger);
+        }
+        return users;
+    }
+
+    @Override
+    public Integer getNumberOfRows() {
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        User user = null;
+        final int count;
+        try {
+            con = ds.getConnection();
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(SQL_SELECT_USER_ROWS_COUNT);
+
+            if (rs.next()) {
+                logger.info("Selected user count ==> " + rs.getInt("cnt") + " .");
+                return rs.getInt("cnt");
+
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
         } finally {
             close(con, logger);
             close(stmt, logger);
             close(rs, logger);
         }
-        return users;
+          logger.info("Error in cout select.");
+        return 0;
     }
 
     private User extractUser(ResultSet rs) throws SQLException {

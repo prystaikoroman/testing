@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Objects;
+import Exception.DBException;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -29,15 +30,22 @@ public class LoginServlet extends HttpServlet {
 
         LoginDao loginDao = new LoginDao();
 
-            String userValidate = loginDao.authenticateUser(loginDto);
-            if (userValidate.equals( "ADMIN_ROLE")) {
+        String userValidate = null;
+        try {
+            userValidate = loginDao.authenticateUser(loginDto);
+        } catch (DBException e) {
+            logger.error(e.getMessage());
+        }
+        if (userValidate.equals( "ADMIN_ROLE")) {
                 UserDaoImpl userDao = new UserDaoImpl();
                 logger.info("Admin's Home");
                 HttpSession session = req.getSession();//create session
+
                 session.setAttribute("Admin", login);
+                session.setAttribute("AdminUser", userDao.findByLogin(login));
                 req.setAttribute("login", login);
-req.setAttribute("users", userDao.getAllUser());
-                req.getRequestDispatcher("/jsp/admin.jsp").forward(req, resp);
+//req.setAttribute("users", userDao.getAllUser());
+                req.getRequestDispatcher("/jsp/adminIndex.jsp").forward(req, resp);
 
             } else if (userValidate.equals( "USER_ROLE")) {
                 logger.info("User's Home");

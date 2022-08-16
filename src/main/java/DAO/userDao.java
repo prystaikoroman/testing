@@ -9,11 +9,14 @@ public interface userDao {
 
     User findByEmail(String email);
 
+    User findByLogin(String login);
+
     boolean save(User user);
 
     boolean update(User user);
 
     boolean delete(int id);
 
-    List<User> getAllUser();
+    List<User> getAllUser(int id, int currentPage, int numOfRecords);
+    Integer getNumberOfRows();
 }

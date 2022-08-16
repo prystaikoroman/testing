@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class User {
     private int id;
     private String login;
@@ -8,18 +10,6 @@ public class User {
     private String password;
     private Boolean admin;
     private Boolean locked;
-
-    @Override
-    public String toString() {
-        return "UserDto{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", email='" + email + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", admin=" + admin +
-                ", locked=" + locked +
-                '}';
-    }
 
     public int getId() {
         return id;
@@ -75,6 +65,31 @@ public class User {
 
     public void setLocked(Boolean locked) {
         this.locked = locked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && login.equals(user.login) && Objects.equals(email, user.email) && Objects.equals(lastname, user.lastname) && password.equals(user.password) && admin.equals(user.admin) && locked.equals(user.locked);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, email, lastname, password, admin, locked);
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", admin=" + admin +
+                ", locked=" + locked +
+                '}';
     }
 
 }

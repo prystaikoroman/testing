@@ -6,6 +6,7 @@ import util.DSInstance;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import Exception.DBException;
 
 import static util.EmptyResources.close;
 
@@ -13,7 +14,7 @@ public class LoginDao {
     private static String SQL_SELECT_USER = "select login,password,admin from user";
     private static final Logger logger = Logger.getLogger(LoginDao.class);
 
-    public String authenticateUser(LoginDto loginDto) {
+    public String authenticateUser(LoginDto loginDto) throws DBException {
         String login = loginDto.getLogin();
         String password = loginDto.getPassword();
 
@@ -49,6 +50,7 @@ public class LoginDao {
             }
         } catch (SQLException e) {
             logger.error( e.getMessage());
+            throw new DBException(e.getMessage());
         }
         finally {
         close(con, logger);

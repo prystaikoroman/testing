@@ -52,7 +52,8 @@ public class AdminUserServlet extends HttpServlet {
         getServletContext().setAttribute("login", session.getAttribute("Admin"));
 
         User adminUser = userDao.findByLogin((String) session.getAttribute("Admin"));
-        Integer nOfPages = userDao.getNumberOfRows();
+        Integer numberOfRows = userDao.getNumberOfRows();
+        Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
         getServletContext().setAttribute("Admin", session.getAttribute("Admin"));
         getServletContext().setAttribute("users", userDao.getAllUser(adminUser.getId(), currentPage,
                 recordsPerPage));

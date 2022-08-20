@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
                 session.setMaxInactiveInterval(10 * 60);
                 session.setAttribute("User", login);
                 req.setAttribute("userName", login);
-                req.getRequestDispatcher("/jsp/user.jsp").forward(req,resp);
+                req.getRequestDispatcher("/jsp/userIndex.jsp").forward(req,resp);
             }
     }
 }

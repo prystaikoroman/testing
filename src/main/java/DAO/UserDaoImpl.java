@@ -11,7 +11,7 @@ import java.util.List;
 
 import static util.EmptyResources.close;
 
-public class UserDaoImpl implements userDao {
+public class UserDaoImpl implements UserDao {
     private static final String SQL_SELECT_ALL_USER = "SELECT * FROM USER WHERE id != ?  LIMIT ?, ?";
     private static final String SQL_SELECT_USER_BY_LOGIN = "SELECT * FROM USER WHERE login = ? ";
     private static final String SQL_SELECT_USER_ROWS_COUNT = "SELECT COUNT(id) AS cnt FROM USER";
@@ -147,7 +147,7 @@ public class UserDaoImpl implements userDao {
 
             pstmt.setInt(1, id);
             count = pstmt.executeUpdate();
-            logger.info("update#Executed");
+            logger.info("delete#Executed");
             if (count > 0) {
                 logger.info("user id = " + id + ". DB deleted");
                 return true;

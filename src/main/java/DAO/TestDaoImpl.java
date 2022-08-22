@@ -13,6 +13,9 @@ import static util.EmptyResources.close;
 
 public class TestDaoImpl implements TestDao {
     private static final String SQL_SELECT_ALL_TEST = "SELECT * FROM TEST WHERE subject_id = ?  LIMIT ?, ?";
+    private static final String SQL_SELECT_ALL_USER_TEST =
+            "SELECT * FROM TEST as t left outer join USER_TEST ut on ut.test_id = t.id and ut.user_id =? WHERE subject_id = ?   LIMIT ?, ?";
+    private static final String SQL_STORED_USER_TESTS_FINISHED_UPD = "CALL user_tests_finished_upd(?)";
     private static final String SQL_SELECT_TEST_BY_NAME = "SELECT * FROM TEST WHERE name = ? ";
     private static final String SQL_SELECT_TEST_ROWS_COUNT = "SELECT COUNT(id) AS cnt FROM TEST";
     private static final String SQL_INSERT_INTO_TEST =
@@ -28,7 +31,32 @@ public class TestDaoImpl implements TestDao {
     private static final DataSource ds = DSInstance.getInstance().getDs();
     private static final Logger logger = Logger.getLogger(TestDaoImpl.class);
 
+    @Override
+    public boolean User_Tests_Finished_Upd(int user_id) {
+        Connection con = null;
+        CallableStatement cstmt = null;
 
+        final boolean executed;
+        try {
+            con = ds.getConnection();
+            cstmt = con.prepareCall(SQL_STORED_USER_TESTS_FINISHED_UPD);
+            cstmt.setInt(1, user_id);
+
+            executed = cstmt.execute();
+            if (executed) {
+
+                return true;
+            }
+            logger.info("User_Tests_Finished_Upd was updated ==> " + executed + " .");
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
+            close(con, logger);
+            close(cstmt, logger);
+
+        }
+        return false;
+    }
 
     @Override
     public Test findById(int id) {
@@ -177,6 +205,37 @@ public class TestDaoImpl implements TestDao {
             pstmt.setInt(1, id);
             pstmt.setInt(2, start);
             pstmt.setInt(3, recordsPerPage);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                tests.add(extractTest(rs));
+            }
+            logger.info("Selected tests ==> " + tests.size() + " counts.");
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
+            close(con, logger);
+            close(pstmt, logger);
+            close(rs, logger);
+        }
+        return tests;
+    }
+
+    @Override
+    public List<Test> getAllUserTests(int user_id, int subject_id, int currentPage, int recordsPerPage) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int start = currentPage * recordsPerPage - recordsPerPage;
+
+        List<Test> tests = new ArrayList<>();
+        final int count;
+        try {
+            con = ds.getConnection();
+            pstmt = con.prepareStatement(SQL_SELECT_ALL_USER_TEST);
+            pstmt.setInt(1, user_id);
+            pstmt.setInt(2, subject_id);
+            pstmt.setInt(3, start);
+            pstmt.setInt(4, recordsPerPage);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 tests.add(extractTest(rs));

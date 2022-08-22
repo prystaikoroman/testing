@@ -3,6 +3,7 @@ package Controller.Admin.Test;
 import Controller.Command;
 import DAO.SubjectDaoImpl;
 import DAO.TestDaoImpl;
+import model.User;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -52,19 +53,44 @@ public class AdminTestServlet extends HttpServlet {
 
          TestDaoImpl testDao = new TestDaoImpl();
         HttpSession session = req.getSession();//create session
-//        session.setAttribute("Admin", session.getAttribute("login"));
-        getServletContext().setAttribute("login", session.getAttribute("Admin"));
+        if (session.getAttribute("Admin") !=null) {
+            //        session.setAttribute("Admin", session.getAttribute("login"));
+            getServletContext().setAttribute("login", session.getAttribute("Admin"));
+            getServletContext().setAttribute("Admin", session.getAttribute("Admin"));
 
-        Integer numberOfRows = testDao.getNumberOfRows();
-        Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
-        getServletContext().setAttribute("Admin", session.getAttribute("Admin"));
-        getServletContext().setAttribute("tests", testDao.getAllTests(Integer.parseInt(req.getParameter("subject_Id")), currentPage,
-                recordsPerPage));
-        logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
-        getServletContext().setAttribute("subject_Id", req.getParameter("subject_Id"));
-        getServletContext().setAttribute("noOfPages", nOfPages);
-        getServletContext().setAttribute("currentPage", currentPage);
-        getServletContext().setAttribute("recordsPerPage", recordsPerPage);
+
+
+            Integer numberOfRows = testDao.getNumberOfRows();
+            Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
+
+            getServletContext().setAttribute("tests", testDao.getAllTests(Integer.parseInt(req.getParameter("subject_Id")), currentPage,
+                    recordsPerPage));
+            logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
+            getServletContext().setAttribute("subject_Id", req.getParameter("subject_Id"));
+            getServletContext().setAttribute("noOfPages", nOfPages);
+            getServletContext().setAttribute("currentPage", currentPage);
+            getServletContext().setAttribute("recordsPerPage", recordsPerPage);
+
+        } else {
+            getServletContext().setAttribute("login", session.getAttribute("User"));
+            getServletContext().setAttribute("Admin", session.getAttribute("User"));
+
+            int userId = ((User) getServletContext().getAttribute("UserUser")).getId();
+            boolean b = testDao.User_Tests_Finished_Upd(userId);
+
+            Integer numberOfRows = testDao.getNumberOfRows();
+            Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
+
+            getServletContext().setAttribute("tests",
+                    testDao.getAllUserTests(userId,
+                                                Integer.parseInt(req.getParameter("subject_Id")),
+                                                currentPage, recordsPerPage));
+            logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
+            getServletContext().setAttribute("subject_Id", req.getParameter("subject_Id"));
+            getServletContext().setAttribute("noOfPages", nOfPages);
+            getServletContext().setAttribute("currentPage", currentPage);
+            getServletContext().setAttribute("recordsPerPage", recordsPerPage);
+        }
 
         resp.sendRedirect(address);
 

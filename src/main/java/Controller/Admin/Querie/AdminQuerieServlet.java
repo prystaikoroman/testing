@@ -57,12 +57,18 @@ public class AdminQuerieServlet extends HttpServlet {
 
         QuerieDaoImpl querieDao = new QuerieDaoImpl();
         HttpSession session = req.getSession();//create session
-//        session.setAttribute("Admin", session.getAttribute("login"));
-        getServletContext().setAttribute("login", session.getAttribute("Admin"));
+        if (session.getAttribute("Admin") !=null) {
+            //        session.setAttribute("Admin", session.getAttribute("login"));
+            getServletContext().setAttribute("login", session.getAttribute("Admin"));
+            getServletContext().setAttribute("Admin", session.getAttribute("Admin"));
+        } else {
+            getServletContext().setAttribute("login", session.getAttribute("User"));
+            getServletContext().setAttribute("Admin", session.getAttribute("User"));
+        }
 
         Integer numberOfRows = querieDao.getNumberOfRows();
         Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
-        getServletContext().setAttribute("Admin", session.getAttribute("Admin"));
+
         getServletContext().setAttribute("queries", querieDao.getAllQueries(Integer.parseInt(req.getParameter("test_Id")), currentPage,
                 recordsPerPage));
         logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);

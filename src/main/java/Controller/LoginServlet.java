@@ -36,8 +36,8 @@ public class LoginServlet extends HttpServlet {
         } catch (DBException e) {
             logger.error(e.getMessage());
         }
+        UserDaoImpl userDao = new UserDaoImpl();
         if (userValidate.equals( "ADMIN_ROLE")) {
-                UserDaoImpl userDao = new UserDaoImpl();
                 logger.info("Admin's Home");
                 HttpSession session = req.getSession();//create session
 
@@ -52,6 +52,7 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = req.getSession();//create session
                 session.setMaxInactiveInterval(10 * 60);
                 session.setAttribute("User", login);
+                session.setAttribute("UserUser", userDao.findByLogin(login));
                 req.setAttribute("userName", login);
                 req.getRequestDispatcher("/jsp/userIndex.jsp").forward(req,resp);
             }

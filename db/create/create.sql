@@ -159,3 +159,5 @@ ENGINE = InnoDB;
 
 
 INSERT INTO `testing`.`user` (`id`, `login`, `email`, `lastname`, `password`, `admin`, `locked`) VALUES ('0', 'admin', 'admin@gmail.com', 'admin', 'admin', '1', '0');
+
+

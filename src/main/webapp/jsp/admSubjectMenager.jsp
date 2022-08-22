@@ -40,6 +40,7 @@
 
 <%--Welcome <%=request.getAttribute("login") %>--%>
 Welcome ${login}
+
 <table class="table">
     <tr>
         <td><label>Name</label></td>
@@ -61,7 +62,7 @@ Welcome ${login}
                             <%} %>
                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            maxlength="150"></td>
-                <%if ((request.getSession(false).getAttribute("User") != null)) {%>
+                <%if ((request.getSession(false).getAttribute("Admin") != null)) {%>
                 <td><input type="submit" name="update" value="update"/></td>
                 <%} %>
             </form>
@@ -70,7 +71,7 @@ Welcome ${login}
                   method="post">
                 <td><input type="submit" name="tests" value="Subject Tests"></td>
             </form>
-            <%if ((request.getSession(false).getAttribute("User") != null)) {%>
+            <%if ((request.getSession(false).getAttribute("Admin") != null)) {%>
             <form name="formDelete"
                   action="${pageContext.request.contextPath}/adminSubject?command=deleteSubject&subjectId=${subject.id}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}"
                   method="post">
@@ -81,7 +82,7 @@ Welcome ${login}
     </c:forEach>
     <%} %>
 
-    <%if ((request.getSession(false).getAttribute("User") != null)) {%>
+    <%if ((request.getSession(false).getAttribute("Admin") != null)) {%>
     <form name="formAdd"
           action="${pageContext.request.contextPath}/adminSubject?command=addSubject&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}"
           method="post">
@@ -127,7 +128,7 @@ Welcome ${login}
     </ul>
 </nav>
 
-<%if ((request.getSession(false).getAttribute("User") == null)) {%>
+<%if ((request.getSession(false).getAttribute("Admin") != null)) {%>
 <div style="text-align: left"><a href="<%=request.getContextPath()%>/jsp/adminIndex.jsp">Admin Home</a></div>
 <%}else { %>
 <div style="text-align: left"><a href="<%=request.getContextPath()%>/jsp/userIndex.jsp">User Home</a></div>

@@ -16,11 +16,11 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
           crossorigin="anonymous">
     <title>Test Manage</title>
-    <%
-        if ((request.getSession(false).getAttribute("Admin") == null)) {
-    %>
-    <jsp:forward page="/jsp/login.jsp"></jsp:forward>
-    <%} %>
+<%--    <%--%>
+<%--        if ((request.getSession(false).getAttribute("Admin") == null)) {--%>
+<%--    %>--%>
+<%--    <jsp:forward page="/jsp/login.jsp"></jsp:forward>--%>
+<%--    <%} %>--%>
 
     <script LANGUAGE="JavaScript">
         function validation() {
@@ -59,18 +59,32 @@ Welcome ${login}
                   onsubmit="return validation()"
                   method="post">
                 <td><input type="text" name="task" value="${test.task}"
+                            <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
+                               readonly
+                            <%} %>
                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            maxlength="250"></td>
                 <td><input type="text" name="name" value="${test.name}"
+                            <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
+                               readonly
+                            <%} %>
                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            maxlength="45"></td>
                 <td><input type="text" name="difficulty" value="${test.difficulty}"
+                            <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
+                               readonly
+                            <%} %>
                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            maxlength="10"></td>
                 <td><input type="text" name="passingTimeMin" value="${test.passingTimeMin}"
+                            <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
+                               readonly
+                            <%} %>
                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            ></td>
+                <%if ((request.getSession(false).getAttribute("Admin") != null)) {%>
                 <td><input type="submit" name="update" value="update"/></td>
+                <%} %>
             </form>
             <form name="formTestQueries"
                   action="${pageContext.request.contextPath}/adminQuerie?command=index&test_Id=${test.id}&subject_Id=${subject_Id}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}"

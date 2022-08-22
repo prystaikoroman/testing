@@ -18,6 +18,8 @@ public interface TestDao {
 
     boolean delete(int id);
 
+    boolean User_Tests_Finished_Upd(int id);
+    List<Test> getAllUserTests(int id, int subject_id, int currentPage, int numOfRecords);
     List<Test> getAllTests(int id, int currentPage, int numOfRecords);
     Integer getNumberOfRows();
 }

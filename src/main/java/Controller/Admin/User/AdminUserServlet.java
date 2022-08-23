@@ -4,6 +4,8 @@ import Controller.Command;
 import DAO.UserDaoImpl;
 import model.User;
 import org.apache.log4j.Logger;
+import service.UserService;
+import service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,16 +48,16 @@ public class AdminUserServlet extends HttpServlet {
              address= command.execute(req, resp);
          }
 
-        UserDaoImpl userDao = new UserDaoImpl();
+        UserService userService = new UserServiceImpl();
         HttpSession session = req.getSession();//create session
 //        session.setAttribute("Admin", session.getAttribute("login"));
         getServletContext().setAttribute("login", session.getAttribute("Admin"));
 
-        User adminUser = userDao.findByLogin((String) session.getAttribute("Admin"));
-        Integer numberOfRows = userDao.getNumberOfRows();
+        User adminUser = userService.findByLogin((String) session.getAttribute("Admin"));
+        Integer numberOfRows = userService.getNumberOfRows();
         Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
         getServletContext().setAttribute("Admin", session.getAttribute("Admin"));
-        getServletContext().setAttribute("users", userDao.getAllUser(adminUser.getId(), currentPage,
+        getServletContext().setAttribute("users", userService.getAllUser(adminUser.getId(), currentPage,
                 recordsPerPage));
         logger.info("noOfPages=" + nOfPages + " currentPage="+ currentPage+ " recordsPerPage="+  recordsPerPage);
         getServletContext().setAttribute("noOfPages", nOfPages);

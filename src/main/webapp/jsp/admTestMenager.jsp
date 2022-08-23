@@ -82,15 +82,28 @@ Welcome ${login}
                             <%} %>
                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            ></td>
+                <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
+                    <td><input type="text" name="finished" value="${test.finished}"
+                               readonly
+                    ></td>
+                <%} %>
                 <%if ((request.getSession(false).getAttribute("Admin") != null)) {%>
                 <td><input type="submit" name="update" value="update"/></td>
                 <%} %>
             </form>
+            <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
+            <form name="formTestQueries"
+                  action="${pageContext.request.contextPath}/adminQuerie?command=index&test_Id=${test.id}&subject_Id=${subject_Id}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}"
+                  method="post">
+                <td><input type="submit" name="queries" value="Pass this Test"></td>
+            </form>
+            <%} else {%>
             <form name="formTestQueries"
                   action="${pageContext.request.contextPath}/adminQuerie?command=index&test_Id=${test.id}&subject_Id=${subject_Id}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}"
                   method="post">
                 <td><input type="submit" name="queries" value="Test Queries"></td>
             </form>
+            <%} %>
             <form name="formDelete"
                   action="${pageContext.request.contextPath}/adminTest?command=deleteTest&testId=${test.id}&subject_Id=${subject_Id}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}"
                   method="post">

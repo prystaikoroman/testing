@@ -5,6 +5,8 @@ import DAO.SubjectDaoImpl;
 import DAO.TestDaoImpl;
 import model.User;
 import org.apache.log4j.Logger;
+import service.TestService;
+import service.TestServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,7 +53,7 @@ public class AdminTestServlet extends HttpServlet {
             address = command.execute(req, resp);
         }
 
-         TestDaoImpl testDao = new TestDaoImpl();
+         TestService testService = new TestServiceImpl();
         HttpSession session = req.getSession();//create session
         if (session.getAttribute("Admin") !=null) {
             //        session.setAttribute("Admin", session.getAttribute("login"));
@@ -60,10 +62,10 @@ public class AdminTestServlet extends HttpServlet {
 
 
 
-            Integer numberOfRows = testDao.getNumberOfRows();
+            Integer numberOfRows = testService.getNumberOfRows();
             Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
 
-            getServletContext().setAttribute("tests", testDao.getAllTests(Integer.parseInt(req.getParameter("subject_Id")), currentPage,
+            getServletContext().setAttribute("tests", testService.getAllTests(req, resp, currentPage,
                     recordsPerPage));
             logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
             getServletContext().setAttribute("subject_Id", req.getParameter("subject_Id"));
@@ -76,13 +78,13 @@ public class AdminTestServlet extends HttpServlet {
             getServletContext().setAttribute("Admin", session.getAttribute("User"));
 
             int userId = ((User) getServletContext().getAttribute("UserUser")).getId();
-            boolean b = testDao.User_Tests_Finished_Upd(userId);
+            boolean b = testService.User_Tests_Finished_Upd(userId);
 
-            Integer numberOfRows = testDao.getNumberOfRows();
+            Integer numberOfRows = testService.getNumberOfRows();
             Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
 
             getServletContext().setAttribute("tests",
-                    testDao.getAllUserTests(userId,
+                    testService.getAllUserTests(userId,
                                                 Integer.parseInt(req.getParameter("subject_Id")),
                                                 currentPage, recordsPerPage));
             logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);

@@ -4,6 +4,8 @@ import Controller.Command;
 import DAO.SubjectDaoImpl;
 import DAO.UserDaoImpl;
 import org.apache.log4j.Logger;
+import service.SubjectService;
+import service.SubjectServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,7 +52,7 @@ public class AdminSubjectServlet extends HttpServlet {
             address = command.execute(req, resp);
         }
 
-         SubjectDaoImpl subjectDao = new SubjectDaoImpl();
+         SubjectService subjectService = new SubjectServiceImpl();
 
 
         HttpSession session = req.getSession();//create session
@@ -64,10 +66,10 @@ public class AdminSubjectServlet extends HttpServlet {
             getServletContext().setAttribute("UserUser", session.getAttribute("UserUser"));
         }
 
-        Integer numberOfRows = subjectDao.getNumberOfRows();
+        Integer numberOfRows = subjectService.getNumberOfRows();
         Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
 
-        getServletContext().setAttribute("subjects", subjectDao.getAllSubjects(currentPage,
+        getServletContext().setAttribute("subjects", subjectService.getAllSubjects(currentPage,
                 recordsPerPage));
         logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
         getServletContext().setAttribute("noOfPages", nOfPages);

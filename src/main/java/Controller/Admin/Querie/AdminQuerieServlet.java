@@ -4,6 +4,8 @@ import Controller.Command;
 import DAO.QuerieDaoImpl;
 import DAO.TestDaoImpl;
 import org.apache.log4j.Logger;
+import service.QuerieService;
+import service.QuerieServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,7 +57,7 @@ public class AdminQuerieServlet extends HttpServlet {
             address = command.execute(req, resp);
         }
 
-        QuerieDaoImpl querieDao = new QuerieDaoImpl();
+        QuerieService querieService = new QuerieServiceImpl();
         HttpSession session = req.getSession();//create session
         if (session.getAttribute("Admin") !=null) {
             //        session.setAttribute("Admin", session.getAttribute("login"));
@@ -66,10 +68,10 @@ public class AdminQuerieServlet extends HttpServlet {
             getServletContext().setAttribute("Admin", session.getAttribute("User"));
         }
 
-        Integer numberOfRows = querieDao.getNumberOfRows();
+        Integer numberOfRows = querieService.getNumberOfRows();
         Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
 
-        getServletContext().setAttribute("queries", querieDao.getAllQueries(Integer.parseInt(req.getParameter("test_Id")), currentPage,
+        getServletContext().setAttribute("queries", querieService.getAllQueries(Integer.parseInt(req.getParameter("test_Id")), currentPage,
                 recordsPerPage));
         logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
         getServletContext().setAttribute("noOfPages", nOfPages);

@@ -4,6 +4,8 @@ import Controller.Command;
 import DAO.QuerieDaoImpl;
 import DAO.TestDaoImpl;
 import org.apache.log4j.Logger;
+import service.QuerieService;
+import service.QuerieServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,9 +16,9 @@ public class DeleteQuerie implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         logger.info("entered#execute");
-        QuerieDaoImpl querieDao = new QuerieDaoImpl();
+        QuerieService querieService = new QuerieServiceImpl();
 
-        querieDao.delete(Integer.parseInt(req.getParameter("querieId")));
+        querieService.delete(Integer.parseInt(req.getParameter("querieId")));
         return req.getContextPath()+"/jsp/admQuerieMenager.jsp";
     }
 }

@@ -4,6 +4,8 @@ import Controller.Command;
 import DAO.SubjectDaoImpl;
 import model.Subject;
 import org.apache.log4j.Logger;
+import service.SubjectService;
+import service.SubjectServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,14 +17,10 @@ public class EditSubject implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         logger.info("entered#execute");
-        SubjectDaoImpl subjectDao = new SubjectDaoImpl();
-        Subject subject = new Subject();
-
-        subject.setId(Integer.parseInt(req.getParameter("subjectId")));
-        subject.setName(req.getParameter("name"));
+        SubjectService subjectService = new SubjectServiceImpl();
 
 //        logger.info("locked ==> " + req.getParameter("locked").equals("on"));
-        subjectDao.update(subject);
+        subjectService.update(req, resp);
 
         return req.getContextPath()+"/jsp/admSubjectMenager.jsp";
     }

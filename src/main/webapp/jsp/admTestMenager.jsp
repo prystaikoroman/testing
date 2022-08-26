@@ -16,11 +16,11 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
           crossorigin="anonymous">
     <title>Test Manage</title>
-<%--    <%--%>
-<%--        if ((request.getSession(false).getAttribute("Admin") == null)) {--%>
-<%--    %>--%>
-<%--    <jsp:forward page="/jsp/login.jsp"></jsp:forward>--%>
-<%--    <%} %>--%>
+    <%--    <%--%>
+    <%--        if ((request.getSession(false).getAttribute("Admin") == null)) {--%>
+    <%--    %>--%>
+    <%--    <jsp:forward page="/jsp/login.jsp"></jsp:forward>--%>
+    <%--    <%} %>--%>
 
     <script LANGUAGE="JavaScript">
         function validation() {
@@ -40,12 +40,28 @@
 
 <%--Welcome <%=request.getAttribute("login") %>--%>
 Welcome ${login}
+<br>
+<lable style="alignment: right">records per page</lable>
+
+<form style="alignment: right" action="${pageContext.request.contextPath}/adminTest?command=index"
+      method="get">
+    <select name="recordsPerPage">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+    </select>
+    <input type="text" hidden name="command" value="index">
+    <input type="text" hidden name="currentPage" value="${currentPage}">
+    <input type="text" hidden name="subject_Id" value="${subject_Id}">
+    <input type="submit" value="Submit"/>
+</form>
 <table class="table">
     <tr>
         <td><label>Task</label></td>
         <td><label>Name</label></td>
         <td><label>Difficulty</label></td>
         <td><label>Passing Time (minute)</label></td>
+        <td><label>finished</label></td>
     </tr>
 
     <%--    <% if (request.getAttribute("users") != null) {   %>  --%>
@@ -59,62 +75,70 @@ Welcome ${login}
                   onsubmit="return validation()"
                   method="post">
                 <td><input type="text" name="task" value="${test.task}"
-                            <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
-                               readonly
-                            <%} %>
+                        <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
+                           readonly
+                        <%} %>
                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            maxlength="250"></td>
                 <td><input type="text" name="name" value="${test.name}"
-                            <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
-                               readonly
-                            <%} %>
+                        <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
+                           readonly
+                        <%} %>
                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            maxlength="45"></td>
                 <td><input type="text" name="difficulty" value="${test.difficulty}"
-                            <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
-                               readonly
-                            <%} %>
+                        <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
+                           readonly
+                        <%} %>
                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                            maxlength="10"></td>
                 <td><input type="text" name="passingTimeMin" value="${test.passingTimeMin}"
-                            <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
-                               readonly
-                            <%} %>
+                        <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
+                           readonly
+                        <%} %>
                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                           ></td>
+                ></td>
                 <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
-                    <td><input type="text" name="finished" value="${test.finished}"
-                               readonly
-                    ></td>
+                <td><input type="checkbox" name="finished"
+                           onclick="return false;"
+                <c:if test="${test.finished == 'true'}">
+                           checked="checked"
+                </c:if>
+                    <%--                               value="${test.finished}"--%>
+                           readonly
+                ></td>
                 <%} %>
                 <%if ((request.getSession(false).getAttribute("Admin") != null)) {%>
                 <td><input type="submit" name="update" value="update"/></td>
                 <%} %>
             </form>
             <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
-            <form name="formTestQueries"
-                  action="${pageContext.request.contextPath}/adminQuerie?command=index&test_Id=${test.id}&subject_Id=${subject_Id}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}"
-                  method="post">
-                <td><input type="submit" name="queries" value="Pass this Test"></td>
-            </form>
+
+            <c:if test="${test.finished == 'false'}">
+                <form name="formTestQueries"
+                      action="${pageContext.request.contextPath}/adminQuerie?command=userPassing&test_Id=${test.id}&subject_Id=${subject_Id}&recordsPerPage=1&currentPage=1"
+                      method="post">
+                    <td><input type="submit" name="queries" value="Pass this Test"></td>
+                </form>
+            </c:if>
             <%} else {%>
             <form name="formTestQueries"
                   action="${pageContext.request.contextPath}/adminQuerie?command=index&test_Id=${test.id}&subject_Id=${subject_Id}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}"
                   method="post">
                 <td><input type="submit" name="queries" value="Test Queries"></td>
             </form>
-            <%} %>
             <form name="formDelete"
                   action="${pageContext.request.contextPath}/adminTest?command=deleteTest&testId=${test.id}&subject_Id=${subject_Id}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}"
                   method="post">
                 <td><input type="submit" name="delete" value="delete"></td>
             </form>
+            <%} %>
         </tr>
 
     </c:forEach>
-
-
     <%} %>
+
+    <%if ((request.getSession(false).getAttribute("Admin") != null)) {%>
     <form name="formAdd"
           action="${pageContext.request.contextPath}/adminTest?command=addTest&subject_Id=${subject_Id}&recordsPerPage=${recordsPerPage}&currentPage=${currentPage}"
           method="post">
@@ -135,6 +159,7 @@ Welcome ${login}
             <td><input type="submit" value="Add"/></td>
         </tr>
     </form>
+    <%} %>
 </table>
 
 
@@ -170,7 +195,9 @@ Welcome ${login}
 </nav>
 
 
-<div style="text-align: left"><a href="<%=request.getContextPath()%>/adminSubject?command=index&subject_Id=${subject_Id}&recordsPerPage=5&currentPage=1">Subject Home</a></div>
+<div style="text-align: left"><a
+        href="<%=request.getContextPath()%>/adminSubject?command=index&subject_Id=${subject_Id}&recordsPerPage=5&currentPage=1">Subject
+    Home</a></div>
 
 </body>
 </html>

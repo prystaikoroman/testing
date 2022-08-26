@@ -26,7 +26,7 @@
 Welcome ${login}
 
 <div style="text-align: center">
-    <h2><a href="<%=request.getContextPath()%>/adminSubject?command=index&recordsPerPage=5&currentPage=1">Subject for passe</a></h2>
+    <h2><a href="<%=request.getContextPath()%>/adminSubject?command=index&recordsPerPage=5&currentPage=1">Subject for pass</a></h2>
 </div>
 
 <div style="text-align: right"><a href="<%=request.getContextPath()%>/LogoutServlet">Logout</a></div>

@@ -6,7 +6,9 @@ public class AdminUserCommandContainer {
     public static Command getCommand (String name) {
         switch (name){
             case "addUser" :
-                return new AddUser();
+                return new AddUser(name);
+            case "regUser" :
+                return new AddUser(name);
             case "editUser" :
                 return new EditUser();
             case "deleteUser" :

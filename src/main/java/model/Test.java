@@ -1,5 +1,8 @@
 package model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class Test {
@@ -9,6 +12,27 @@ public class Test {
     private int difficulty;
     private short passingTimeMin;
     private int subject_id;
+
+private Date  started;
+private boolean finished;
+
+    public Date getStarted() {
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//        return dateFormat.format(started);
+        return started;
+    }
+
+    public void setStarted(Date started) {
+        this.started = started;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
 
     public int getId() {
         return id;

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import service.SubjectService;
 import service.SubjectServiceImpl;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
+import Exception.DBException;
 //Front Controller Pattern Servlet
 
 @WebServlet("/adminSubject")
@@ -35,6 +36,8 @@ public class AdminSubjectServlet extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.info("entered#process");
+        ServletContext servletContext = getServletContext();
+
         int currentPage = 1;
         int recordsPerPage = 5;
         if(req.getParameter("recordsPerPage")!= null){
@@ -48,9 +51,13 @@ public class AdminSubjectServlet extends HttpServlet {
         String address = req.getContextPath() + "/jsp/admSubjectMenager.jsp";
 
         if (command != null) {
-
-            address = command.execute(req, resp);
+            try {
+            address = command.execute(req, resp, servletContext);
+        } catch (DBException e) {
+            address = req.getContextPath() + "/jsp/authError.jsp";
+            e.printStackTrace();
         }
+    }
 
          SubjectService subjectService = new SubjectServiceImpl();
 
@@ -58,23 +65,23 @@ public class AdminSubjectServlet extends HttpServlet {
         HttpSession session = req.getSession();//create session
         if (session.getAttribute("Admin") !=null) {
             //        session.setAttribute("Admin", session.getAttribute("login"));
-            getServletContext().setAttribute("login", session.getAttribute("Admin"));
-            getServletContext().setAttribute("Admin", session.getAttribute("Admin"));
+            servletContext.setAttribute("login", session.getAttribute("Admin"));
+            servletContext.setAttribute("Admin", session.getAttribute("Admin"));
         } else {
-            getServletContext().setAttribute("login", session.getAttribute("User"));
-            getServletContext().setAttribute("Admin", session.getAttribute("User"));
-            getServletContext().setAttribute("UserUser", session.getAttribute("UserUser"));
+            servletContext.setAttribute("login", session.getAttribute("User"));
+            servletContext.setAttribute("Admin", session.getAttribute("User"));
+            servletContext.setAttribute("UserUser", session.getAttribute("UserUser"));
         }
 
         Integer numberOfRows = subjectService.getNumberOfRows();
         Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
 
-        getServletContext().setAttribute("subjects", subjectService.getAllSubjects(currentPage,
+        servletContext.setAttribute("subjects", subjectService.getAllSubjects(currentPage,
                 recordsPerPage));
         logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
-        getServletContext().setAttribute("noOfPages", nOfPages);
-        getServletContext().setAttribute("currentPage", currentPage);
-        getServletContext().setAttribute("recordsPerPage", recordsPerPage);
+        servletContext.setAttribute("noOfPages", nOfPages);
+        servletContext.setAttribute("currentPage", currentPage);
+        servletContext.setAttribute("recordsPerPage", recordsPerPage);
 
         resp.sendRedirect(address);
 

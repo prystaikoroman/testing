@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-
+import Exception.DBException;
 public class UserServiceImpl implements UserService{
     private final static Logger logger = Logger.getLogger(UserServiceImpl.class);
 
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean save(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean save(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         logger.info("entered#save");
         User user = new User();
         user.setLogin(req.getParameter("login"));

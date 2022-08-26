@@ -9,6 +9,10 @@ public class AdminQuerieCommandContainer {
                 return new AddQuerie();
             case "editQuerie" :
                 return new EditQuerie();
+            case "userPassing" :
+                return new UserQueriesPass();
+            case "userQuerieCommit" :
+                return new UserQuerieCommit();
             case "deleteQuerie" :
                 return new DeleteQuerie();
             default:

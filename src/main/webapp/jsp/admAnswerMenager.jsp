@@ -40,6 +40,23 @@
 
 <%--Welcome <%=request.getAttribute("login") %>--%>
 Welcome ${login}
+<br>
+<lable style="alignment: right">records per page</lable>
+
+<form style="alignment: right" action="${pageContext.request.contextPath}/adminAnswer?command=index"
+      method="get">
+    <select  name="recordsPerPage" >
+        <option  value="5"  >5</option>
+        <option  value="10" >10</option>
+        <option  value="15" >15</option>
+    </select>
+    <input type="text" hidden name="command" value="index" >
+    <input type="text" hidden name="currentPage" value="${currentPage}" >
+    <input type="text" hidden name="querie_Id" value="${querie_Id}" >
+    <input type="text" hidden name="test_Id" value="${test_Id}" >
+    <input type="text" hidden name="subject_Id" value="${subject_Id}" >
+    <input type="submit" value="Submit" />
+</form>
 <table class="table">
     <tr>
         <td><label>Answer</label></td>

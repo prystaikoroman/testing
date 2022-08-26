@@ -6,7 +6,9 @@ import util.DSInstance;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static util.EmptyResources.close;
@@ -30,6 +32,11 @@ public class TestDaoImpl implements TestDao {
     private static final String SQL_DELETE_TEST = "DELETE FROM TEST WHERE id = ?";
     private static final DataSource ds = DSInstance.getInstance().getDs();
     private static final Logger logger = Logger.getLogger(TestDaoImpl.class);
+    private static final String SQL_INSERT_USER_TEST =
+            "INSERT IGNORE INTO USER_TEST " +
+                    " (user_id, test_id, started, finished) " +
+            "VALUES " +
+                    " (?, ?, ?, ?)";
 
     @Override
     public boolean User_Tests_Finished_Upd(int user_id) {
@@ -191,6 +198,38 @@ public class TestDaoImpl implements TestDao {
     }
 
     @Override
+    public boolean insertUser_Test(int user_Id, int test_Id) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        final int count;
+        try {
+            con = ds.getConnection();
+            logger.info("connection ==> " + con);
+            pstmt = con.prepareStatement(SQL_INSERT_USER_TEST);
+
+            pstmt.setInt(1, user_Id);
+            pstmt.setInt(2, test_Id);
+            pstmt.setTimestamp(3, java.sql.Timestamp.valueOf(LocalDateTime.now()));
+            pstmt.setInt(4, 0);
+            count = pstmt.executeUpdate();
+            logger.info("INSERT_USER_TEST#Executed");
+            if (count > 0) {
+                logger.info("INSERT_USER_TEST user_Id = " + user_Id + ", test_Id = " + test_Id + ". DB INSERTED");
+                return true;
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
+            close(con, logger);
+            close(pstmt, logger);
+            close(rs, logger);
+        }
+        return false;
+    
+    }
+
+    @Override
     public List<Test> getAllTests(int id, int currentPage, int recordsPerPage) {
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -276,11 +315,12 @@ public class TestDaoImpl implements TestDao {
             close(stmt, logger);
             close(rs, logger);
         }
-          logger.info("Error in cout select.");
+        logger.info("Error in cout select.");
         return 0;
     }
 
     private Test extractTest(ResultSet rs) throws SQLException {
+        logger.info("entered#extractTest");
         Test test = new Test();
         test.setId(rs.getInt("id"));
         test.setTask(rs.getString("task"));
@@ -288,7 +328,15 @@ public class TestDaoImpl implements TestDao {
         test.setName(rs.getString("name"));
         test.setDifficulty(rs.getInt("difficulty"));
         test.setPassingTimeMin(rs.getShort("passingTimeMin"));
+        try {
+            //may throw Ex if epsent
+            rs.findColumn("started");
 
+            test.setStarted(rs.getDate("started"));
+            test.setFinished(rs.getBoolean("finished"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return test;
     }
 

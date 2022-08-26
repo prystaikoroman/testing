@@ -8,6 +8,7 @@ import model.Test;
 import model.User;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -61,6 +62,13 @@ public class TestServiceImpl implements TestService{
     public boolean delete(HttpServletRequest req, HttpServletResponse resp) {
         int testId = Integer.parseInt(req.getParameter("testId"));
         return testDao.delete(testId);
+    }
+
+    @Override
+    public boolean insertUser_Test(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) {
+        int user_Id = ((User) servletContext.getAttribute("UserUser")).getId();
+        int test_Id =Integer.parseInt((String) servletContext.getAttribute("test_Id"));
+        return testDao.insertUser_Test(user_Id, test_Id);
     }
 
     @Override

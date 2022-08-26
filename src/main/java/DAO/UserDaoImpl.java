@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import Exception.DBException;
 
 import static util.EmptyResources.close;
 
@@ -70,7 +71,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean save(User user) {
+    public boolean save(User user) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -92,6 +93,7 @@ public class UserDaoImpl implements UserDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);

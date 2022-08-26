@@ -3,7 +3,10 @@ package Controller.Admin.Answer;
 import Controller.Command;
 import DAO.AnswerDaoImpl;
 import org.apache.log4j.Logger;
+import service.AnswerService;
+import service.AnswerServiceImpl;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
+import Exception.DBException;
 //Front Controller Pattern Servlet
 
 @WebServlet("/adminAnswer")
@@ -34,6 +37,7 @@ public class AdminAnswerServlet extends HttpServlet {
         logger.info("entered#process");
         int currentPage = 1;
         int recordsPerPage = 5;
+        ServletContext servletContext = getServletContext();
         if(req.getParameter("currentPage")!= null){
         currentPage = Integer.parseInt(req.getParameter("currentPage"));
         }
@@ -45,34 +49,38 @@ public class AdminAnswerServlet extends HttpServlet {
         String address = req.getContextPath() + "/jsp/admAnswerMenager.jsp";
 
         if (command != null) {
-
-            address = command.execute(req, resp);
+            try {
+                address = command.execute(req, resp, servletContext);
+            } catch (DBException e) {
+                address = req.getContextPath() + "/jsp/authError.jsp";
+                e.printStackTrace();
+            }
         }
 
-        AnswerDaoImpl answerDao = new AnswerDaoImpl();
+        AnswerService  answerService= new AnswerServiceImpl();
         HttpSession session = req.getSession();//create session
         if (session.getAttribute("Admin") !=null) {
             //        session.setAttribute("Admin", session.getAttribute("login"));
-            getServletContext().setAttribute("login", session.getAttribute("Admin"));
-            getServletContext().setAttribute("Admin", session.getAttribute("Admin"));
+            servletContext.setAttribute("login", session.getAttribute("Admin"));
+            servletContext.setAttribute("Admin", session.getAttribute("Admin"));
         } else {
-            getServletContext().setAttribute("login", session.getAttribute("User"));
-            getServletContext().setAttribute("Admin", session.getAttribute("User"));
+            servletContext.setAttribute("login", session.getAttribute("User"));
+            servletContext.setAttribute("Admin", session.getAttribute("User"));
         }
 
-        Integer numberOfRows = answerDao.getNumberOfRows();
+        Integer numberOfRows = answerService.getNumberOfRows();
         Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
 
-        getServletContext().setAttribute("answers", answerDao.getAllAnswers(Integer.parseInt(req.getParameter("querie_Id")), currentPage,
+        servletContext.setAttribute("answers", answerService.getAllAnswers(Integer.parseInt(req.getParameter("querie_Id")), currentPage,
                 recordsPerPage));
         logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
-        getServletContext().setAttribute("noOfPages", nOfPages );
-        getServletContext().setAttribute("currentPage", currentPage);
-        getServletContext().setAttribute("recordsPerPage", recordsPerPage);
+        servletContext.setAttribute("noOfPages", nOfPages );
+        servletContext.setAttribute("currentPage", currentPage);
+        servletContext.setAttribute("recordsPerPage", recordsPerPage);
 
-        getServletContext().setAttribute("querie_Id", req.getParameter("querie_Id"));
-        getServletContext().setAttribute("test_Id", req.getParameter("test_Id"));
-        getServletContext().setAttribute("subject_Id", req.getParameter("subject_Id"));
+        servletContext.setAttribute("querie_Id", req.getParameter("querie_Id"));
+        servletContext.setAttribute("test_Id", req.getParameter("test_Id"));
+        servletContext.setAttribute("subject_Id", req.getParameter("subject_Id"));
 
 
         resp.sendRedirect(address);

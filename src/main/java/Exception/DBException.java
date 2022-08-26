@@ -1,6 +1,6 @@
 package Exception;
 
-public class DBException extends Exception {
+public class DBException extends Throwable  {
     public DBException() {
         super();
     }
@@ -14,4 +14,5 @@ public class DBException extends Exception {
         super(reason);
 
     }
+
 }

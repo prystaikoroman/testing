@@ -14,6 +14,7 @@ public interface AnswerDao {
 
     boolean delete(int id);
 
+    boolean insertUser_Test_Answer(int user_Id, int test_Id, int answer_Id, boolean correct);
     List<Answer> getAllAnswers(int id, int currentPage, int numOfRecords);
     Integer getNumberOfRows();
 }

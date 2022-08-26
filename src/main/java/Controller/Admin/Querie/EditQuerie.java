@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import service.QuerieService;
 import service.QuerieServiceImpl;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,7 +18,7 @@ public class EditQuerie implements Command {
     private final static Logger logger = Logger.getLogger(EditQuerie.class);
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) {
         logger.info("entered#execute");
         QuerieService querieService = new QuerieServiceImpl();
 

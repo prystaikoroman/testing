@@ -7,6 +7,16 @@ public class Answer {
     private String answer;
     private boolean correct;
     private int querie_id;
+    private boolean userChecking;
+
+    public boolean isUserChecking() {
+        return userChecking;
+    }
+
+    public void setUserChecking(boolean userChecking) {
+        this.userChecking = userChecking;
+    }
+
 
     public Answer() {
     }
@@ -63,6 +73,7 @@ public class Answer {
                 ", answer='" + answer + '\'' +
                 ", correct=" + correct +
                 ", querie_id=" + querie_id +
+                ", userChecking=" + userChecking +
                 '}';
     }
 }

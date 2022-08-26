@@ -6,7 +6,7 @@ import util.DSInstance;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import Exception.DBException;
+import Exception.AuthException;
 
 import static util.EmptyResources.close;
 
@@ -14,7 +14,7 @@ public class LoginDao {
     private static String SQL_SELECT_USER = "select login,password,admin from user";
     private static final Logger logger = Logger.getLogger(LoginDao.class);
 
-    public String authenticateUser(LoginDto loginDto) throws DBException {
+    public String authenticateUser(LoginDto loginDto) throws AuthException {
         String login = loginDto.getLogin();
         String password = loginDto.getPassword();
 
@@ -50,7 +50,7 @@ public class LoginDao {
             }
         } catch (SQLException e) {
             logger.error( e.getMessage());
-            throw new DBException(e.getMessage());
+            throw new AuthException(e.getMessage());
         }
         finally {
         close(con, logger);
@@ -58,8 +58,8 @@ public class LoginDao {
         close(resultSet, logger);
     }
 
-    role = "Invalid user credentials";
+        role = "Invalid user credentials";
         logger.error( role);
-        return role;
+        throw new AuthException(role);
     }
 }

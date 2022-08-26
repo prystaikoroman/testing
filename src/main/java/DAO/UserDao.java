@@ -3,7 +3,7 @@ package DAO;
 import model.User;
 
 import java.util.List;
-
+import Exception.DBException;
 public interface UserDao {
     User findById(int id);
 
@@ -11,7 +11,7 @@ public interface UserDao {
 
     User findByLogin(String login);
 
-    boolean save(User user);
+    boolean save(User user) throws DBException;
 
     boolean update(User user);
 

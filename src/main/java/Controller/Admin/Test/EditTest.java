@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import service.TestService;
 import service.TestServiceImpl;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,7 +18,7 @@ public class EditTest implements Command {
     private final static Logger logger = Logger.getLogger(EditTest.class);
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) {
         logger.info("entered#execute");
         TestService testService = new TestServiceImpl();
 //        logger.info("locked ==> " + req.getParameter("locked").equals("on"));

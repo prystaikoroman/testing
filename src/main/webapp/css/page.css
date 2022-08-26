@@ -4,3 +4,7 @@ align : "center"
 .span {
     color:red
 }
+textarea {
+    width: 750px;
+    height: 100px;
+}

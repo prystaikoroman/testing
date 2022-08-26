@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import service.UserService;
 import service.UserServiceImpl;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +16,7 @@ public class EditUser implements Command {
     private final static Logger logger = Logger.getLogger(EditUser.class);
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) {
         logger.info("entered#execute");
         UserService userService = new UserServiceImpl();
 

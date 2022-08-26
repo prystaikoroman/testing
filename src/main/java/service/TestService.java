@@ -2,6 +2,7 @@ package service;
 
 import model.Test;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -18,6 +19,7 @@ public interface TestService {
     boolean update(HttpServletRequest req, HttpServletResponse resp);
 
     boolean delete(HttpServletRequest req, HttpServletResponse resp);
+    boolean insertUser_Test( HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext);
 
     boolean User_Tests_Finished_Upd(int id);
     List<Test> getAllUserTests(int user_Id, int subject_id, int currentPage, int numOfRecords);

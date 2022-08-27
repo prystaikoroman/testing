@@ -150,7 +150,7 @@ Welcome ${login}
                                         checked="checked"
                                     </c:when>
                                     <c:otherwise>
-                                        checked="false"
+                                        unchecked
                                     </c:otherwise>
                                 </c:choose>
                             <%--                                   <c:if test="${answer.userChecking == 'true'}">checked="checked"</c:if>--%>
@@ -163,7 +163,7 @@ Welcome ${login}
                                 <%} %>
                                       oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                       maxlength="150">${answer.answer}</textarea></td>
-                        <td><input type="checkbox" name="correct" hidden
+                        <td><input type="checkbox" name="correct<%=i++%>" hidden
                                    <c:if test="${answer.correct == 'true'}">checked="checked"</c:if> /></td>
 
 

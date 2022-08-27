@@ -1017,363 +1017,438 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <user id="287" parent="1" name="user">
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <table id="288" parent="282" name="answer">
+    <routine id="288" parent="282" name="insert_user_test_answer">
+      <Definer>root@localhost</Definer>
+      <RoutineKind>procedure</RoutineKind>
+      <SourceTextLength>711</SourceTextLength>
+    </routine>
+    <routine id="289" parent="282" name="user_tests_finished_upd">
+      <Definer>root@localhost</Definer>
+      <RoutineKind>procedure</RoutineKind>
+      <SourceTextLength>708</SourceTextLength>
+    </routine>
+    <table id="290" parent="282" name="answer">
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="289" parent="282" name="querie">
+    <table id="291" parent="282" name="querie">
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="290" parent="282" name="subject">
+    <table id="292" parent="282" name="subject">
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="291" parent="282" name="test">
+    <table id="293" parent="282" name="tbl_test_for_upd">
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="292" parent="282" name="user">
+    <table id="294" parent="282" name="test">
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="293" parent="282" name="user_test">
+    <table id="295" parent="282" name="user">
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <table id="294" parent="282" name="user_test_answer">
+    <table id="296" parent="282" name="user_test">
       <Engine>InnoDB</Engine>
       <CollationName>utf8_general_ci</CollationName>
     </table>
-    <column id="295" parent="288" name="id">
+    <table id="297" parent="282" name="user_test_answer">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <argument id="298" parent="288" name="IN_user_test_user_id">
+      <DataType>int|0s</DataType>
+      <Position>1</Position>
+    </argument>
+    <argument id="299" parent="288" name="IN_user_test_test_id">
+      <DataType>int|0s</DataType>
+      <Position>2</Position>
+    </argument>
+    <argument id="300" parent="288" name="IN_answer_id">
+      <DataType>int|0s</DataType>
+      <Position>3</Position>
+    </argument>
+    <argument id="301" parent="288" name="IN_correct">
+      <DataType>int|0s</DataType>
+      <Position>4</Position>
+    </argument>
+    <argument id="302" parent="289" name="IN_user_Id">
+      <DataType>int|0s</DataType>
+      <Position>1</Position>
+    </argument>
+    <column id="303" parent="290" name="id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="296" parent="288" name="answer">
+    <column id="304" parent="290" name="answer">
       <DataType>varchar(150)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="297" parent="288" name="correct">
+    <column id="305" parent="290" name="correct">
       <DataType>tinyint(1)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="298" parent="288" name="querie_id">
+    <column id="306" parent="290" name="querie_id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <foreign-key id="299" parent="288" name="fk_answer_querie1">
+    <foreign-key id="307" parent="290" name="fk_answer_querie1">
       <ColNames>querie_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>querie</RefTableName>
     </foreign-key>
-    <index id="300" parent="288" name="id_UNIQUE">
+    <index id="308" parent="290" name="id_UNIQUE">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="301" parent="288" name="fk_answer_querie1_idx">
+    <index id="309" parent="290" name="fk_answer_querie1_idx">
       <ColNames>querie_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="302" parent="288" name="PRIMARY">
+    <key id="310" parent="290" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <key id="303" parent="288" name="id_UNIQUE">
+    <key id="311" parent="290" name="id_UNIQUE">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>id_UNIQUE</UnderlyingIndexName>
     </key>
-    <column id="304" parent="289" name="id">
+    <column id="312" parent="291" name="id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="305" parent="289" name="question">
+    <column id="313" parent="291" name="question">
       <DataType>varchar(150)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="306" parent="289" name="test_id">
+    <column id="314" parent="291" name="test_id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <foreign-key id="307" parent="289" name="fk_test_option_test1">
+    <foreign-key id="315" parent="291" name="fk_test_option_test1">
       <ColNames>test_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>test</RefTableName>
     </foreign-key>
-    <index id="308" parent="289" name="fk_test_option_test1_idx">
+    <index id="316" parent="291" name="fk_test_option_test1_idx">
       <ColNames>test_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="309" parent="289" name="PRIMARY">
+    <key id="317" parent="291" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <column id="310" parent="290" name="id">
+    <column id="318" parent="292" name="id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="311" parent="290" name="name">
+    <column id="319" parent="292" name="name">
       <DataType>varchar(150)|0s</DataType>
       <Position>2</Position>
     </column>
-    <index id="312" parent="290" name="name_UNIQUE">
+    <index id="320" parent="292" name="name_UNIQUE">
       <ColNames>name</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="313" parent="290" name="PRIMARY">
+    <key id="321" parent="292" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <key id="314" parent="290" name="name_UNIQUE">
+    <key id="322" parent="292" name="name_UNIQUE">
       <ColNames>name</ColNames>
       <UnderlyingIndexName>name_UNIQUE</UnderlyingIndexName>
     </key>
-    <column id="315" parent="291" name="id">
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="316" parent="291" name="task">
-      <DataType>varchar(250)|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="317" parent="291" name="subject_id">
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="318" parent="291" name="name">
-      <DataType>varchar(45)|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="319" parent="291" name="difficulty">
-      <DataType>tinyint|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <column id="320" parent="291" name="passingTimeMin">
-      <DataType>smallint|0s</DataType>
-      <Position>6</Position>
-    </column>
-    <foreign-key id="321" parent="291" name="fk_test_subject">
-      <ColNames>subject_id</ColNames>
-      <RefColNames>id</RefColNames>
-      <RefTableName>subject</RefTableName>
-    </foreign-key>
-    <index id="322" parent="291" name="id_UNIQUE">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="323" parent="291" name="fk_test_subject_idx">
-      <ColNames>subject_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="324" parent="291" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-    </key>
-    <key id="325" parent="291" name="id_UNIQUE">
-      <ColNames>id</ColNames>
-      <UnderlyingIndexName>id_UNIQUE</UnderlyingIndexName>
-    </key>
-    <column id="326" parent="292" name="id">
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="327" parent="292" name="login">
-      <DataType>varchar(150)|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-    </column>
-    <column id="328" parent="292" name="email">
-      <DataType>varchar(150)|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-    </column>
-    <column id="329" parent="292" name="lastname">
-      <DataType>varchar(45)|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-    </column>
-    <column id="330" parent="292" name="password">
-      <DataType>varchar(150)|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <column id="331" parent="292" name="admin">
-      <DataType>tinyint(1)|0s</DataType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-    </column>
-    <column id="332" parent="292" name="locked">
-      <DataType>tinyint|0s</DataType>
-      <DefaultExpression>0</DefaultExpression>
-      <NotNull>1</NotNull>
-      <Position>7</Position>
-    </column>
-    <index id="333" parent="292" name="d_UNIQUE">
-      <ColNames>id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="334" parent="292" name="login_UNIQUE">
-      <ColNames>login</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="335" parent="292" name="email_UNIQUE">
-      <ColNames>email</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="336" parent="292" name="PRIMARY">
-      <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <Primary>1</Primary>
-    </key>
-    <key id="337" parent="292" name="d_UNIQUE">
-      <ColNames>id</ColNames>
-      <UnderlyingIndexName>d_UNIQUE</UnderlyingIndexName>
-    </key>
-    <key id="338" parent="292" name="login_UNIQUE">
-      <ColNames>login</ColNames>
-      <UnderlyingIndexName>login_UNIQUE</UnderlyingIndexName>
-    </key>
-    <key id="339" parent="292" name="email_UNIQUE">
-      <ColNames>email</ColNames>
-      <UnderlyingIndexName>email_UNIQUE</UnderlyingIndexName>
-    </key>
-    <column id="340" parent="293" name="user_id">
+    <column id="323" parent="293" name="user_id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="341" parent="293" name="test_id">
+    <column id="324" parent="293" name="test_id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="342" parent="293" name="started">
+    <column id="325" parent="293" name="started">
       <DataType>datetime|0s</DataType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="343" parent="293" name="finished">
+    <column id="326" parent="293" name="finished">
       <DataType>tinyint|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <foreign-key id="344" parent="293" name="fk_user_has_test_user1">
+    <column id="327" parent="293" name="finished_Upd">
+      <DataType>int|0s</DataType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="328" parent="293" name="id">
+      <DataType>int|0s</DataType>
+      <DefaultExpression>0</DefaultExpression>
+      <Position>6</Position>
+    </column>
+    <column id="329" parent="293" name="task">
+      <DataType>varchar(250)|0s</DataType>
+      <Position>7</Position>
+    </column>
+    <column id="330" parent="293" name="subject_id">
+      <DataType>int|0s</DataType>
+      <Position>8</Position>
+    </column>
+    <column id="331" parent="293" name="name">
+      <DataType>varchar(45)|0s</DataType>
+      <Position>9</Position>
+    </column>
+    <column id="332" parent="293" name="difficulty">
+      <DataType>tinyint|0s</DataType>
+      <Position>10</Position>
+    </column>
+    <column id="333" parent="293" name="passingTimeMin">
+      <DataType>smallint|0s</DataType>
+      <Position>11</Position>
+    </column>
+    <column id="334" parent="294" name="id">
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="335" parent="294" name="task">
+      <DataType>varchar(250)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="336" parent="294" name="subject_id">
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="337" parent="294" name="name">
+      <DataType>varchar(45)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="338" parent="294" name="difficulty">
+      <DataType>tinyint|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="339" parent="294" name="passingTimeMin">
+      <DataType>smallint|0s</DataType>
+      <Position>6</Position>
+    </column>
+    <foreign-key id="340" parent="294" name="fk_test_subject">
+      <ColNames>subject_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>subject</RefTableName>
+    </foreign-key>
+    <index id="341" parent="294" name="id_UNIQUE">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="342" parent="294" name="fk_test_subject_idx">
+      <ColNames>subject_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="343" parent="294" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+    </key>
+    <key id="344" parent="294" name="id_UNIQUE">
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>id_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="345" parent="295" name="id">
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="346" parent="295" name="login">
+      <DataType>varchar(150)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="347" parent="295" name="email">
+      <DataType>varchar(150)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="348" parent="295" name="lastname">
+      <DataType>varchar(45)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="349" parent="295" name="password">
+      <DataType>varchar(150)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="350" parent="295" name="admin">
+      <DataType>tinyint(1)|0s</DataType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="351" parent="295" name="locked">
+      <DataType>tinyint|0s</DataType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <index id="352" parent="295" name="d_UNIQUE">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="353" parent="295" name="login_UNIQUE">
+      <ColNames>login</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="354" parent="295" name="email_UNIQUE">
+      <ColNames>email</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="355" parent="295" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+    </key>
+    <key id="356" parent="295" name="d_UNIQUE">
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>d_UNIQUE</UnderlyingIndexName>
+    </key>
+    <key id="357" parent="295" name="login_UNIQUE">
+      <ColNames>login</ColNames>
+      <UnderlyingIndexName>login_UNIQUE</UnderlyingIndexName>
+    </key>
+    <key id="358" parent="295" name="email_UNIQUE">
+      <ColNames>email</ColNames>
+      <UnderlyingIndexName>email_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="359" parent="296" name="user_id">
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="360" parent="296" name="test_id">
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="361" parent="296" name="started">
+      <DataType>datetime|0s</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="362" parent="296" name="finished">
+      <DataType>tinyint|0s</DataType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <foreign-key id="363" parent="296" name="fk_user_has_test_user1">
       <ColNames>user_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>user</RefTableName>
     </foreign-key>
-    <foreign-key id="345" parent="293" name="fk_user_has_test_test1">
+    <foreign-key id="364" parent="296" name="fk_user_has_test_test1">
       <ColNames>test_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>test</RefTableName>
     </foreign-key>
-    <index id="346" parent="293" name="user_id_UNIQUE">
-      <ColNames>user_id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="347" parent="293" name="test_id_UNIQUE">
-      <ColNames>test_id</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <index id="348" parent="293" name="fk_user_has_test_user1_idx">
+    <index id="365" parent="296" name="fk_user_has_test_user1_idx">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="349" parent="293" name="fk_user_has_test_test1_idx">
+    <index id="366" parent="296" name="fk_user_has_test_test1_idx">
       <ColNames>test_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="350" parent="293" name="PRIMARY">
+    <key id="367" parent="296" name="PRIMARY">
       <ColNames>user_id
 test_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <key id="351" parent="293" name="user_id_UNIQUE">
-      <ColNames>user_id</ColNames>
-      <UnderlyingIndexName>user_id_UNIQUE</UnderlyingIndexName>
-    </key>
-    <key id="352" parent="293" name="test_id_UNIQUE">
-      <ColNames>test_id</ColNames>
-      <UnderlyingIndexName>test_id_UNIQUE</UnderlyingIndexName>
-    </key>
-    <column id="353" parent="294" name="user_test_user_id">
+    <column id="368" parent="297" name="user_test_user_id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="354" parent="294" name="user_test_test_id">
+    <column id="369" parent="297" name="user_test_test_id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="355" parent="294" name="answer_id">
+    <column id="370" parent="297" name="answer_id">
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="356" parent="294" name="correct">
+    <column id="371" parent="297" name="correct">
       <DataType>tinyint(1)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <foreign-key id="357" parent="294" name="fk_user_test_has_answer_user_test1">
+    <column id="372" parent="297" name="selected">
+      <DataType>tinyint(1)|0s</DataType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <foreign-key id="373" parent="297" name="fk_user_test_has_answer_user_test1">
       <ColNames>user_test_user_id
 user_test_test_id</ColNames>
       <RefColNames>user_id
 test_id</RefColNames>
       <RefTableName>user_test</RefTableName>
     </foreign-key>
-    <foreign-key id="358" parent="294" name="fk_user_test_has_answer_answer1">
+    <foreign-key id="374" parent="297" name="fk_user_test_has_answer_answer1">
       <ColNames>answer_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>answer</RefTableName>
     </foreign-key>
-    <index id="359" parent="294" name="fk_user_test_has_answer_user_test1_idx">
+    <index id="375" parent="297" name="fk_user_test_has_answer_user_test1_idx">
       <ColNames>user_test_user_id
 user_test_test_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="360" parent="294" name="fk_user_test_has_answer_answer1_idx">
+    <index id="376" parent="297" name="fk_user_test_has_answer_answer1_idx">
       <ColNames>answer_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="361" parent="294" name="PRIMARY">
+    <key id="377" parent="297" name="PRIMARY">
       <ColNames>user_test_user_id
 user_test_test_id
 answer_id</ColNames>

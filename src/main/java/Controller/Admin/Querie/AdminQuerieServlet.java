@@ -92,7 +92,7 @@ public class AdminQuerieServlet extends HttpServlet {
 
                 AnswerService answerService = new AnswerServiceImpl();
                 if (queries.size() > 0) {
-                    servletContext.setAttribute("answers", answerService.getAllAnswers(queries.get(0).getId(), 1,
+                    servletContext.setAttribute("answers", answerService.getAllAnswers_UserSubmition(queries.get(0).getId(), 1,
                             150));
                 }
             }

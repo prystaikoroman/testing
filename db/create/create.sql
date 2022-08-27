@@ -93,25 +93,16 @@ ENGINE = InnoDB;
 -- Table `testing`.`user_test`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `testing`.`user_test` (
-  `user_id` INT NOT NULL,
-  `test_id` INT NOT NULL,
-  `started` DATETIME NOT NULL DEFAULT NOW(),
-  `finished` TINYINT NOT NULL DEFAULT 0,
-  PRIMARY KEY (`user_id`, `test_id`),
-  INDEX `fk_user_has_test_test1_idx` (`test_id` ASC) VISIBLE,
-  INDEX `fk_user_has_test_user1_idx` (`user_id` ASC) VISIBLE,
-  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE,
-  UNIQUE INDEX `test_id_UNIQUE` (`test_id` ASC) VISIBLE,
-  CONSTRAINT `fk_user_has_test_user1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `testing`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_has_test_test1`
-    FOREIGN KEY (`test_id`)
-    REFERENCES `testing`.`test` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+ `user_id` int NOT NULL,
+  `test_id` int NOT NULL,
+  `started` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `finished` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_id`,`test_id`),
+  KEY `fk_user_has_test_test1_idx` (`test_id`),
+  KEY `fk_user_has_test_user1_idx` (`user_id`),
+  CONSTRAINT `fk_user_has_test_test1` FOREIGN KEY (`test_id`) REFERENCES `test` (`id`),
+  CONSTRAINT `fk_user_has_test_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+    )
 ENGINE = InnoDB;
 
 
@@ -142,6 +133,7 @@ CREATE TABLE IF NOT EXISTS `testing`.`user_test_answer` (
   `user_test_test_id` INT NOT NULL,
   `answer_id` INT NOT NULL,
   `correct` TINYINT(1) NOT NULL DEFAULT 0,
+  `selected` TINYINT(1)  NOT NULL DEFAULT 0,
   PRIMARY KEY (`user_test_user_id`, `user_test_test_id`, `answer_id`),
   INDEX `fk_user_test_has_answer_answer1_idx` (`answer_id` ASC) VISIBLE,
   INDEX `fk_user_test_has_answer_user_test1_idx` (`user_test_user_id` ASC, `user_test_test_id` ASC) VISIBLE,

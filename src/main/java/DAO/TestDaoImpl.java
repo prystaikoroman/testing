@@ -16,6 +16,8 @@ import Exception.DBException;
 import static util.EmptyResources.close;
 
 public class TestDaoImpl implements TestDao {
+    private static final DataSource ds = DSInstance.getInstance().getDs();
+    private static final Logger logger = Logger.getLogger(TestDaoImpl.class);
     private static final String SQL_SELECT_ALL_TEST = "SELECT * FROM TEST WHERE subject_id = ?  LIMIT ?, ?";
     private static final String SQL_SELECT_ALL_USER_TEST =
             "SELECT * FROM TEST as t left outer join USER_TEST ut on ut.test_id = t.id and ut.user_id =? WHERE subject_id = ?   LIMIT ?, ?";
@@ -32,8 +34,7 @@ public class TestDaoImpl implements TestDao {
                     "task = ?, name = ?, difficulty = ?, passingTimeMin = ? " +
                     "where id = ?";
     private static final String SQL_DELETE_TEST = "DELETE FROM TEST WHERE id = ?";
-    private static final DataSource ds = DSInstance.getInstance().getDs();
-    private static final Logger logger = Logger.getLogger(TestDaoImpl.class);
+
     private static final String SQL_INSERT_USER_TEST =
             "INSERT IGNORE INTO USER_TEST " +
                     " (user_id, test_id, started, finished) " +

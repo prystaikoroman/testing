@@ -20,7 +20,7 @@
 <form action="${pageContext.request.contextPath}/adminUser?recordsPerPage=15&currentPage=1"
       method="post">
     <div align="center"> <h1>New User: </h1>
-        <input type="hidden" name="command" value="regUser">
+        <input type="hidden" name="command" value="registerUser">
         <input type="hidden" name="admin" value="0">
         <input type="hidden" name="locked" value="0">
 

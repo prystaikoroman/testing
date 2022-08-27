@@ -7,7 +7,7 @@ public class AdminUserCommandContainer {
         switch (name){
             case "addUser" :
                 return new AddUser(name);
-            case "regUser" :
+            case "registerUser" :
                 return new AddUser(name);
             case "editUser" :
                 return new EditUser();

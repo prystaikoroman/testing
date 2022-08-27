@@ -50,22 +50,17 @@ public class AdminTestServlet extends HttpServlet {
         Command command = AdminTestCommandContainer.getCommand(commandName);
         String address = req.getContextPath() + "/jsp/admTestMenager.jsp";
 
-        if (command != null) {
 
-            try {
-                address = command.execute(req, resp, servletContext);
-            } catch (DBException e) {
-                address = req.getContextPath() + "/jsp/authError.jsp";
-                e.printStackTrace();
-            }
-        }
-
-         TestService testService = new TestServiceImpl();
+        TestService testService = new TestServiceImpl();
         HttpSession session = req.getSession();//create session
+        try {
+            if (command != null) {
+
+
+                address = command.execute(req, resp, servletContext);
+        }
         if (session.getAttribute("Admin") !=null) {
             //        session.setAttribute("Admin", session.getAttribute("login"));
-            servletContext.setAttribute("login", session.getAttribute("Admin"));
-            servletContext.setAttribute("Admin", session.getAttribute("Admin"));
 
 
 
@@ -75,14 +70,12 @@ public class AdminTestServlet extends HttpServlet {
             servletContext.setAttribute("tests", testService.getAllTests(req, resp, currentPage,
                     recordsPerPage));
             logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
-            servletContext.setAttribute("subject_Id", req.getParameter("subject_Id"));
+
             servletContext.setAttribute("noOfPages", nOfPages);
             servletContext.setAttribute("currentPage", currentPage);
             servletContext.setAttribute("recordsPerPage", recordsPerPage);
 
         } else {
-            servletContext.setAttribute("login", session.getAttribute("User"));
-            servletContext.setAttribute("Admin", session.getAttribute("User"));
 
             int userId = ((User) servletContext.getAttribute("UserUser")).getId();
             boolean b = testService.User_Tests_Finished_Upd(userId);
@@ -95,11 +88,17 @@ public class AdminTestServlet extends HttpServlet {
                                                 Integer.parseInt(req.getParameter("subject_Id")),
                                                 currentPage, recordsPerPage));
             logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
-            servletContext.setAttribute("subject_Id", req.getParameter("subject_Id"));
+
+
+
             servletContext.setAttribute("noOfPages", nOfPages);
             servletContext.setAttribute("currentPage", currentPage);
             servletContext.setAttribute("recordsPerPage", recordsPerPage);
         }
+    } catch (DBException e) {
+            session.setAttribute("errMessage", e.getMessage());
+            address = req.getContextPath() + "/jsp/authError.jsp";
+    }
 
         resp.sendRedirect(address);
 

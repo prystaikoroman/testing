@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import Exception.DBException;
 
 import static util.EmptyResources.close;
 
@@ -35,7 +36,7 @@ public class QuerieDaoImpl implements QuerieDao {
     }
 
     @Override
-    public boolean save(Querie querie) {
+    public boolean save(Querie querie) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -53,6 +54,7 @@ public class QuerieDaoImpl implements QuerieDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -62,7 +64,7 @@ public class QuerieDaoImpl implements QuerieDao {
     }
 
     @Override
-    public boolean update(Querie querie) {
+    public boolean update(Querie querie) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -82,6 +84,7 @@ public class QuerieDaoImpl implements QuerieDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -92,7 +95,7 @@ public class QuerieDaoImpl implements QuerieDao {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -111,6 +114,7 @@ public class QuerieDaoImpl implements QuerieDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -121,7 +125,7 @@ public class QuerieDaoImpl implements QuerieDao {
     }
 
     @Override
-    public List<Querie> getAllQueries(int id, int currentPage, int recordsPerPage) {
+    public List<Querie> getAllQueries(int id, int currentPage, int recordsPerPage) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -142,6 +146,7 @@ public class QuerieDaoImpl implements QuerieDao {
             logger.info("Selected queries ==> " + queries.size() + " counts.");
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -151,7 +156,7 @@ public class QuerieDaoImpl implements QuerieDao {
     }
 
     @Override
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows() throws DBException {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -170,6 +175,7 @@ public class QuerieDaoImpl implements QuerieDao {
 
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(stmt, logger);

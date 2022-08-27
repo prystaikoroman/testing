@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import Exception.DBException;
 
 import static util.EmptyResources.close;
 
@@ -34,7 +35,7 @@ public class AnswerDaoImpl implements AnswerDao {
     }
 
     @Override
-    public boolean save(Answer answer) {
+    public boolean save(Answer answer) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -53,6 +54,7 @@ public class AnswerDaoImpl implements AnswerDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -62,7 +64,7 @@ public class AnswerDaoImpl implements AnswerDao {
     }
 
     @Override
-    public boolean update(Answer answer) {
+    public boolean update(Answer answer) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -83,6 +85,7 @@ public class AnswerDaoImpl implements AnswerDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -93,7 +96,7 @@ public class AnswerDaoImpl implements AnswerDao {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -112,6 +115,7 @@ public class AnswerDaoImpl implements AnswerDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -127,7 +131,7 @@ public class AnswerDaoImpl implements AnswerDao {
     }
 
     @Override
-    public List<Answer> getAllAnswers(int id, int currentPage, int recordsPerPage) {
+    public List<Answer> getAllAnswers(int id, int currentPage, int recordsPerPage) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -148,6 +152,7 @@ public class AnswerDaoImpl implements AnswerDao {
             logger.info("Selected Answers ==> " + answers.size() + " counts.");
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -157,7 +162,7 @@ public class AnswerDaoImpl implements AnswerDao {
     }
 
     @Override
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows() throws DBException {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -176,6 +181,7 @@ public class AnswerDaoImpl implements AnswerDao {
 
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(stmt, logger);

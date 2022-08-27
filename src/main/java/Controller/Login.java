@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import Exception.DBException;
 
 public class Login implements Command {
     private final static Logger logger = Logger.getLogger(Login.class);
@@ -42,8 +43,11 @@ public class Login implements Command {
             }
         } catch (AuthException e) {
             return req.getContextPath() + "/jsp/registration.jsp";
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+//        } catch (Exception e) {
+//            logger.error(e.getMessage());
+//            session.setAttribute("errMessage", e.getMessage());
+//            return req.getContextPath() + "/jsp/authError.jsp";
+        } catch (DBException e) {
             session.setAttribute("errMessage", e.getMessage());
             return req.getContextPath() + "/jsp/authError.jsp";
         }

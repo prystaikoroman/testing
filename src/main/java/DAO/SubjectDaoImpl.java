@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import Exception.DBException;
 import static util.EmptyResources.close;
 
 public class SubjectDaoImpl implements SubjectDao {
@@ -38,7 +38,7 @@ public class SubjectDaoImpl implements SubjectDao {
 
 
     @Override
-    public Subject findByName(String name) {
+    public Subject findByName(String name) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -57,6 +57,7 @@ public class SubjectDaoImpl implements SubjectDao {
             logger.info("Selected subject ==> " + subject + " .");
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -67,7 +68,7 @@ public class SubjectDaoImpl implements SubjectDao {
     }
 
     @Override
-    public boolean save(Subject subject) {
+    public boolean save(Subject subject) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -84,6 +85,7 @@ public class SubjectDaoImpl implements SubjectDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -93,7 +95,7 @@ public class SubjectDaoImpl implements SubjectDao {
     }
 
     @Override
-    public boolean update(Subject subject) {
+    public boolean update(Subject subject) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -112,6 +114,7 @@ public class SubjectDaoImpl implements SubjectDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -122,7 +125,7 @@ public class SubjectDaoImpl implements SubjectDao {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -141,6 +144,7 @@ public class SubjectDaoImpl implements SubjectDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -151,7 +155,7 @@ public class SubjectDaoImpl implements SubjectDao {
     }
 
     @Override
-    public List<Subject> getAllSubjects( int currentPage, int recordsPerPage) {
+    public List<Subject> getAllSubjects( int currentPage, int recordsPerPage) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -171,6 +175,7 @@ public class SubjectDaoImpl implements SubjectDao {
             logger.info("Selected subjects ==> " + subjects.size() + " counts.");
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -180,7 +185,7 @@ public class SubjectDaoImpl implements SubjectDao {
     }
 
     @Override
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows() throws DBException {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -199,6 +204,7 @@ public class SubjectDaoImpl implements SubjectDao {
 
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(stmt, logger);

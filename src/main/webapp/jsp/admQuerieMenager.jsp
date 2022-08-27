@@ -150,7 +150,7 @@ Welcome ${login}
                                         checked="checked"
                                     </c:when>
                                     <c:otherwise>
-                                        unchecked
+                                        checked="false"
                                     </c:otherwise>
                                 </c:choose>
                             <%--                                   <c:if test="${answer.userChecking == 'true'}">checked="checked"</c:if>--%>

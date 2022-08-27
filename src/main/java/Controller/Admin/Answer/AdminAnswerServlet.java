@@ -38,6 +38,9 @@ public class AdminAnswerServlet extends HttpServlet {
         int currentPage = 1;
         int recordsPerPage = 5;
         ServletContext servletContext = getServletContext();
+        AnswerService  answerService= new AnswerServiceImpl();
+        HttpSession session = req.getSession();//create session
+
         if(req.getParameter("currentPage")!= null){
         currentPage = Integer.parseInt(req.getParameter("currentPage"));
         }
@@ -47,26 +50,11 @@ public class AdminAnswerServlet extends HttpServlet {
         String commandName = req.getParameter("command");
         Command command = AdminAnswerCommandContainer.getCommand(commandName);
         String address = req.getContextPath() + "/jsp/admAnswerMenager.jsp";
-
+        try {
         if (command != null) {
-            try {
-                address = command.execute(req, resp, servletContext);
-            } catch (DBException e) {
-                address = req.getContextPath() + "/jsp/authError.jsp";
-                e.printStackTrace();
-            }
-        }
 
-        AnswerService  answerService= new AnswerServiceImpl();
-        HttpSession session = req.getSession();//create session
-        if (session.getAttribute("Admin") !=null) {
-            //        session.setAttribute("Admin", session.getAttribute("login"));
-            servletContext.setAttribute("login", session.getAttribute("Admin"));
-            servletContext.setAttribute("Admin", session.getAttribute("Admin"));
-        } else {
-            servletContext.setAttribute("login", session.getAttribute("User"));
-            servletContext.setAttribute("Admin", session.getAttribute("User"));
-        }
+                address = command.execute(req, resp, servletContext);
+         }
 
         Integer numberOfRows = answerService.getNumberOfRows();
         Integer nOfPages = (double)(numberOfRows / recordsPerPage)<1 ? 1: numberOfRows / recordsPerPage +( (numberOfRows % recordsPerPage)>0?1:0);
@@ -77,10 +65,10 @@ public class AdminAnswerServlet extends HttpServlet {
         servletContext.setAttribute("noOfPages", nOfPages );
         servletContext.setAttribute("currentPage", currentPage);
         servletContext.setAttribute("recordsPerPage", recordsPerPage);
-
-        servletContext.setAttribute("querie_Id", req.getParameter("querie_Id"));
-        servletContext.setAttribute("test_Id", req.getParameter("test_Id"));
-        servletContext.setAttribute("subject_Id", req.getParameter("subject_Id"));
+    } catch (DBException e) {
+        session.setAttribute("errMessage", e.getMessage());
+        address = req.getContextPath() + "/jsp/authError.jsp";
+    }
 
 
         resp.sendRedirect(address);

@@ -6,8 +6,9 @@ import DAO.TestDao;
 import DAO.TestDaoImpl;
 import model.Test;
 import model.User;
+import model.User_Test;
 import org.apache.log4j.Logger;
-
+import Exception.DBException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,17 +24,26 @@ public class TestServiceImpl implements TestService{
     }
 
     @Override
+    public User_Test findUser_TestById(HttpServletRequest req, HttpServletResponse resp) {
+//        int user_id;
+//        int test_id;
+//        user_id = req.
+//        return testDao.findUser_TestById();
+        return null;
+    }
+
+    @Override
     public Test findByTask(String email) {
         return null;
     }
 
     @Override
-    public Test findByName(String login) {
+    public Test findByName(String login) throws DBException {
         return testDao.findByName(login);
     }
 
     @Override
-    public boolean save(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean save(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Test test = new Test();
         test.setName(req.getParameter("name"));
         test.setTask(req.getParameter("task"));
@@ -45,7 +55,7 @@ public class TestServiceImpl implements TestService{
     }
 
     @Override
-    public boolean update(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean update(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Test test = new Test();
 
         test.setId(Integer.parseInt(req.getParameter("testId")));
@@ -59,25 +69,25 @@ public class TestServiceImpl implements TestService{
     }
 
     @Override
-    public boolean delete(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean delete(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         int testId = Integer.parseInt(req.getParameter("testId"));
         return testDao.delete(testId);
     }
 
     @Override
-    public boolean insertUser_Test(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) {
+    public boolean insertUser_Test(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) throws DBException {
         int user_Id = ((User) servletContext.getAttribute("UserUser")).getId();
         int test_Id =Integer.parseInt((String) servletContext.getAttribute("test_Id"));
         return testDao.insertUser_Test(user_Id, test_Id);
     }
 
     @Override
-    public boolean User_Tests_Finished_Upd(int userId) {
+    public boolean User_Tests_Finished_Upd(int userId) throws DBException {
         return testDao.User_Tests_Finished_Upd(userId);
     }
 
     @Override
-    public List<Test> getAllUserTests(int user_Id, int subject_id, int currentPage, int numOfRecords) {
+    public List<Test> getAllUserTests(int user_Id, int subject_id, int currentPage, int numOfRecords) throws DBException {
         return testDao.getAllUserTests(user_Id, subject_id, currentPage, numOfRecords);
     }
 
@@ -88,7 +98,7 @@ public class TestServiceImpl implements TestService{
     }
 
     @Override
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows() throws DBException {
         return testDao.getNumberOfRows();
     }
 }

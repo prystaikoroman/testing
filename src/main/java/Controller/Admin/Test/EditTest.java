@@ -12,13 +12,13 @@ import service.TestServiceImpl;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import Exception.DBException;
 
 public class EditTest implements Command {
     private final static Logger logger = Logger.getLogger(EditTest.class);
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) throws DBException {
         logger.info("entered#execute");
         TestService testService = new TestServiceImpl();
 //        logger.info("locked ==> " + req.getParameter("locked").equals("on"));

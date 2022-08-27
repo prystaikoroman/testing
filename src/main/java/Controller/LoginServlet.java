@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
         private void process(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
             logger.info("entered#process");
             ServletContext servletContext = getServletContext();
-
+            HttpSession session = req.getSession();//create session
             String commandName = req.getParameter("command");
             Command command = LoginCommandContainer.getCommand(commandName);
             String address = req.getContextPath() + "/jsp/login.jsp";
@@ -39,10 +39,9 @@ public class LoginServlet extends HttpServlet {
                 try {
                     address = command.execute(req, resp, servletContext);
                 } catch (DBException e) {
+                    session.setAttribute("errMessage", e.getMessage());
                     address = req.getContextPath() + "/jsp/authError.jsp";
-                    e.printStackTrace();
                 }
-
             }
             resp.sendRedirect(address);
 

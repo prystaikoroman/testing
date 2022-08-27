@@ -6,10 +6,10 @@ import DAO.QuerieDao;
 import DAO.QuerieDaoImpl;
 import model.Answer;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import Exception.DBException;
 
 public class AnswerServiceImpl implements AnswerService{
     public AnswerServiceImpl() {
@@ -24,7 +24,7 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public boolean save(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean save(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Answer answer = new Answer();
         answer.setAnswer(req.getParameter("answer"));
         answer.setCorrect(req.getParameter("correct") != null && req.getParameter("correct").equals("on"));
@@ -34,7 +34,7 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public boolean update(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean update(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Answer answer = new Answer();
 
         answer.setId(Integer.parseInt(req.getParameter("answerId")));
@@ -46,7 +46,7 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws DBException {
         return answerDao.delete(id);
     }
 
@@ -60,12 +60,12 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public List<Answer> getAllAnswers(int id, int currentPage, int numOfRecords) {
+    public List<Answer> getAllAnswers(int id, int currentPage, int numOfRecords) throws DBException {
         return answerDao.getAllAnswers(id, currentPage, numOfRecords);
     }
 
     @Override
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows() throws DBException {
         return answerDao.getNumberOfRows();
     }
 }

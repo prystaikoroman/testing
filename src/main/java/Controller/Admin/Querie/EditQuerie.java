@@ -12,13 +12,13 @@ import service.QuerieServiceImpl;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import Exception.DBException;
 
 public class EditQuerie implements Command {
     private final static Logger logger = Logger.getLogger(EditQuerie.class);
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) {
+    public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) throws DBException {
         logger.info("entered#execute");
         QuerieService querieService = new QuerieServiceImpl();
 

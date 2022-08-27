@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
 import Exception.DBException;
 //Front Controller Pattern Servlet
 
@@ -46,41 +47,43 @@ public class AdminUserServlet extends HttpServlet {
         String commandName = req.getParameter("command");
         Command command = AdminUserCommandContainer.getCommand(commandName);
         String address = req.getContextPath() + "/jsp/admUserMenager.jsp";
-
-        if (command != null) {
-            try {
-            address = command.execute(req, resp, servletContext);
-            } catch (DBException e) {
-                address = req.getContextPath() + "/jsp/authError.jsp";
-                e.printStackTrace();
-            }
-        }
         UserService userService = new UserServiceImpl();
         HttpSession session = req.getSession();//create session
-        if (!commandName.equals("regUser")) {
+        try {
+            if (command != null) {
 
-//        session.setAttribute("Admin", session.getAttribute("login"));
+                address = command.execute(req, resp, servletContext);
+            }
 
-            servletContext.setAttribute("login", session.getAttribute("Admin"));
+            if (!commandName.equals("registerUser")) {
 
-            User adminUser = userService.findByLogin((String) session.getAttribute("Admin"));
-            Integer numberOfRows = userService.getNumberOfRows();
-            Integer nOfPages = (double) (numberOfRows / recordsPerPage) < 1 ? 1 : numberOfRows / recordsPerPage + ((numberOfRows % recordsPerPage) > 0 ? 1 : 0);
+                session.setAttribute("Admin", session.getAttribute("login"));
 
-            servletContext.setAttribute("Admin", session.getAttribute("Admin"));
-            servletContext.setAttribute("users", userService.getAllUser(adminUser.getId(), currentPage,
-                    recordsPerPage));
+                servletContext.setAttribute("login", session.getAttribute("Admin"));
 
-            logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
-            servletContext.setAttribute("noOfPages", nOfPages);
-            servletContext.setAttribute("currentPage", currentPage);
-            servletContext.setAttribute("recordsPerPage", recordsPerPage);
-        }else
-        {
-            servletContext.setAttribute("login", req.getParameter("login"));
-            servletContext.setAttribute("password", req.getParameter("password"));
+                User adminUser = userService.findByLogin((String) session.getAttribute("Admin"));
+                Integer numberOfRows = userService.getNumberOfRows();
+                Integer nOfPages = (double) (numberOfRows / recordsPerPage) < 1 ? 1 : numberOfRows / recordsPerPage + ((numberOfRows % recordsPerPage) > 0 ? 1 : 0);
+
+//            servletContext.setAttribute("Admin", session.getAttribute("Admin"));
+                servletContext.setAttribute("users", userService.getAllUser(adminUser.getId(), currentPage,
+                        recordsPerPage));
+
+                logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
+                servletContext.setAttribute("noOfPages", nOfPages);
+                servletContext.setAttribute("currentPage", currentPage);
+                servletContext.setAttribute("recordsPerPage", recordsPerPage);
+            } else {
+                servletContext.setAttribute("login", req.getParameter("login"));
+                servletContext.setAttribute("password", req.getParameter("password"));
+
+            }
+        } catch (DBException e) {
+            session.setAttribute("errMessage", e.getMessage());
+            address = req.getContextPath() + "/jsp/authError.jsp";
 
         }
+
         resp.sendRedirect(address);
 
     }

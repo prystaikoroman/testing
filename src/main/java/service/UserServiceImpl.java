@@ -5,11 +5,11 @@ import DAO.UserDao;
 import DAO.UserDaoImpl;
 import model.User;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import Exception.DBException;
+
 public class UserServiceImpl implements UserService{
     private final static Logger logger = Logger.getLogger(UserServiceImpl.class);
 
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findByLogin(String login) {
+    public User findByLogin(String login) throws DBException {
         logger.info("entered#findByLogin");
         return userDao.findByLogin(login);
     }
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean update(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean update(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         logger.info("entered#update");
         User user = new User();
 
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean delete(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean delete(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         logger.info("entered#delete");
         int userId = Integer.parseInt(req.getParameter("userId"));
 
@@ -69,13 +69,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getAllUser(int id, int currentPage, int numOfRecords) {
+    public List<User> getAllUser(int id, int currentPage, int numOfRecords) throws DBException {
         logger.info("entered#getAllUser");
         return userDao.getAllUser(id, currentPage, numOfRecords);
     }
 
     @Override
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows() throws DBException {
         logger.info("entered#getNumberOfRows");
 
         return userDao.getNumberOfRows();

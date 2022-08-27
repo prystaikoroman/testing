@@ -50,14 +50,11 @@ public class AdminSubjectServlet extends HttpServlet {
         Command command = AdminSubjectCommandContainer.getCommand(commandName);
         String address = req.getContextPath() + "/jsp/admSubjectMenager.jsp";
 
-        if (command != null) {
-            try {
+        try {
+            if (command != null) {
+
             address = command.execute(req, resp, servletContext);
-        } catch (DBException e) {
-            address = req.getContextPath() + "/jsp/authError.jsp";
-            e.printStackTrace();
-        }
-    }
+     }
 
          SubjectService subjectService = new SubjectServiceImpl();
 
@@ -82,6 +79,10 @@ public class AdminSubjectServlet extends HttpServlet {
         servletContext.setAttribute("noOfPages", nOfPages);
         servletContext.setAttribute("currentPage", currentPage);
         servletContext.setAttribute("recordsPerPage", recordsPerPage);
+        } catch (DBException e) {
+            address = req.getContextPath() + "/jsp/authError.jsp";
+            e.printStackTrace();
+        }
 
         resp.sendRedirect(address);
 

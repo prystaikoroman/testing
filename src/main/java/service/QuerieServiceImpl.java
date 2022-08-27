@@ -6,7 +6,7 @@ import DAO.TestDao;
 import DAO.TestDaoImpl;
 import model.Querie;
 import org.apache.log4j.Logger;
-
+import Exception.DBException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -22,7 +22,7 @@ public class QuerieServiceImpl implements QuerieService{
     }
 
     @Override
-    public boolean save(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean save(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Querie querie = new Querie();
         querie.setQuestion(req.getParameter("question"));
         querie.setTest_id(Integer.parseInt(req.getParameter("test_Id")));
@@ -31,7 +31,7 @@ public class QuerieServiceImpl implements QuerieService{
     }
 
     @Override
-    public boolean update(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean update(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Querie querie = new Querie();
 
         querie.setId(Integer.parseInt(req.getParameter("querieId")));
@@ -42,17 +42,17 @@ public class QuerieServiceImpl implements QuerieService{
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws DBException {
         return querieDao.delete(id);
     }
 
     @Override
-    public List<Querie> getAllQueries(int id, int currentPage, int numOfRecords) {
+    public List<Querie> getAllQueries(int id, int currentPage, int numOfRecords) throws DBException {
         return querieDao.getAllQueries(id,currentPage,numOfRecords);
     }
 
     @Override
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows() throws DBException {
         return querieDao.getNumberOfRows();
     }
 }

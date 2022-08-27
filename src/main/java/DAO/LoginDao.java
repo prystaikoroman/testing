@@ -9,7 +9,7 @@ import java.sql.*;
 import Exception.AuthException;
 
 import static util.EmptyResources.close;
-
+import Exception.DBException;
 public class LoginDao {
     private static String SQL_SELECT_USER = "select login,password,admin from user";
     private static final Logger logger = Logger.getLogger(LoginDao.class);

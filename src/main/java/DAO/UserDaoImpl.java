@@ -42,7 +42,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByLogin(String login) {
+    public User findByLogin(String login) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -61,6 +61,7 @@ public class UserDaoImpl implements UserDao {
             logger.info("Selected user ==> " + user + " .");
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -103,7 +104,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean update(User user) {
+    public boolean update(User user) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -127,6 +128,7 @@ public class UserDaoImpl implements UserDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -137,7 +139,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -156,6 +158,7 @@ public class UserDaoImpl implements UserDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -166,7 +169,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAllUser(int id, int currentPage, int recordsPerPage) {
+    public List<User> getAllUser(int id, int currentPage, int recordsPerPage) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -187,6 +190,7 @@ public class UserDaoImpl implements UserDao {
             logger.info("Selected users ==> " + users.size() + " counts.");
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -196,7 +200,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows() throws DBException {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -215,6 +219,7 @@ public class UserDaoImpl implements UserDao {
 
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(stmt, logger);

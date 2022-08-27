@@ -1,6 +1,7 @@
 package DAO;
 
 import model.Test;
+import model.User_Test;
 import org.apache.log4j.Logger;
 import util.DSInstance;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import Exception.DBException;
 
 import static util.EmptyResources.close;
 
@@ -39,7 +41,7 @@ public class TestDaoImpl implements TestDao {
                     " (?, ?, ?, ?)";
 
     @Override
-    public boolean User_Tests_Finished_Upd(int user_id) {
+    public boolean User_Tests_Finished_Upd(int user_id) throws DBException {
         Connection con = null;
         CallableStatement cstmt = null;
 
@@ -57,6 +59,7 @@ public class TestDaoImpl implements TestDao {
             logger.info("User_Tests_Finished_Upd was updated ==> " + executed + " .");
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(cstmt, logger);
@@ -71,12 +74,44 @@ public class TestDaoImpl implements TestDao {
     }
 
     @Override
+    public User_Test findUser_TestById(int user_id, int test_id) throws DBException {
+//        Connection con = null;
+//        PreparedStatement pstmt = null;
+//        ResultSet rs = null;
+//        User_Test user_test = null;
+//        final int count;
+//        try {
+//            con = ds.getConnection();
+//            pstmt = con.prepareStatement(SQL_SELECT_TEST_BY_NAME);
+//            pstmt.setString(1, name);
+//
+//            rs = pstmt.executeQuery();
+//            if (rs.next()) {
+//                user_test = extractUser_Test(rs);
+//                return user_test;
+//            }
+//            logger.info("Selected test ==> " + user_test + " .");
+//        } catch (SQLException e) {
+//            logger.error(e.getMessage());
+//            throw new DBException(e.getMessage());
+//        } finally {
+//            close(con, logger);
+//            close(pstmt, logger);
+//            close(rs, logger);
+//        }
+//        return user_test;
+
+return null;
+    }
+
+
+    @Override
     public Test findByTask(String task) {
         return null;
     }
 
     @Override
-    public Test findByName(String name) {
+    public Test findByName(String name) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -95,6 +130,7 @@ public class TestDaoImpl implements TestDao {
             logger.info("Selected test ==> " + test + " .");
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -105,7 +141,7 @@ public class TestDaoImpl implements TestDao {
     }
 
     @Override
-    public boolean save(Test test) {
+    public boolean save(Test test) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -127,6 +163,7 @@ public class TestDaoImpl implements TestDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -136,7 +173,7 @@ public class TestDaoImpl implements TestDao {
     }
 
     @Override
-    public boolean update(Test test) {
+    public boolean update(Test test) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -159,6 +196,7 @@ public class TestDaoImpl implements TestDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -169,7 +207,7 @@ public class TestDaoImpl implements TestDao {
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(int id) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -188,6 +226,7 @@ public class TestDaoImpl implements TestDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -198,7 +237,7 @@ public class TestDaoImpl implements TestDao {
     }
 
     @Override
-    public boolean insertUser_Test(int user_Id, int test_Id) {
+    public boolean insertUser_Test(int user_Id, int test_Id) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -220,6 +259,7 @@ public class TestDaoImpl implements TestDao {
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -260,7 +300,7 @@ public class TestDaoImpl implements TestDao {
     }
 
     @Override
-    public List<Test> getAllUserTests(int user_id, int subject_id, int currentPage, int recordsPerPage) {
+    public List<Test> getAllUserTests(int user_id, int subject_id, int currentPage, int recordsPerPage) throws DBException {
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -282,6 +322,7 @@ public class TestDaoImpl implements TestDao {
             logger.info("Selected tests ==> " + tests.size() + " counts.");
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(pstmt, logger);
@@ -291,7 +332,7 @@ public class TestDaoImpl implements TestDao {
     }
 
     @Override
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows() throws DBException {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -310,6 +351,7 @@ public class TestDaoImpl implements TestDao {
 
         } catch (SQLException e) {
             logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
         } finally {
             close(con, logger);
             close(stmt, logger);
@@ -335,6 +377,7 @@ public class TestDaoImpl implements TestDao {
             test.setStarted(rs.getDate("started"));
             test.setFinished(rs.getBoolean("finished"));
         } catch (SQLException e) {
+            //прокидати не потрібно бо помилка означає що був виконаний один запит а не другий
             e.printStackTrace();
         }
         return test;

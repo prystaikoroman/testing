@@ -2,7 +2,8 @@ package DAO;
 
 import model.Querie;
 import model.Test;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.DSInstance;
 
 import javax.sql.DataSource;
@@ -28,7 +29,7 @@ public class QuerieDaoImpl implements QuerieDao {
                     "where id = ?";
     private static final String SQL_DELETE_QUERIE = "DELETE FROM QUERIE WHERE id = ?";
     private static final DataSource ds = DSInstance.getInstance().getDs();
-    private static final Logger logger = Logger.getLogger(QuerieDaoImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(QuerieDaoImpl.class);
 
     @Override
     public Querie findById(int id) {

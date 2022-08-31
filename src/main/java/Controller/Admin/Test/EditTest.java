@@ -5,7 +5,8 @@ import DAO.SubjectDaoImpl;
 import DAO.TestDaoImpl;
 import model.Subject;
 import model.Test;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.TestService;
 import service.TestServiceImpl;
 
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import Exception.DBException;
 
 public class EditTest implements Command {
-    private final static Logger logger = Logger.getLogger(EditTest.class);
+    private final static Logger logger = LoggerFactory.getLogger(EditTest.class);
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) throws DBException {

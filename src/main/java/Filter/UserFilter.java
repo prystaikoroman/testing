@@ -2,7 +2,8 @@ package Filter;
 
 import Controller.Admin.User.AdminUserServlet;
 import model.User;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.UserService;
 import service.UserServiceImpl;
 
@@ -16,7 +17,7 @@ import java.io.IOException;
 )
 
 public class UserFilter implements Filter {
-    private final static Logger logger = Logger.getLogger(UserFilter.class);
+    private final static Logger logger = LoggerFactory.getLogger(UserFilter.class);
     FilterConfig config;
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)

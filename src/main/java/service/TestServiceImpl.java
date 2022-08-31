@@ -7,15 +7,17 @@ import DAO.TestDaoImpl;
 import model.Test;
 import model.User;
 import model.User_Test;
-import org.apache.log4j.Logger;
 import Exception.DBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class TestServiceImpl implements TestService{
-    private final static Logger logger = Logger.getLogger(TestServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(TestServiceImpl.class);
 
     private final TestDao testDao = new TestDaoImpl();
     @Override

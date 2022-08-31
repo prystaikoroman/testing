@@ -1,6 +1,7 @@
 package Filter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.AnswerService;
 import service.AnswerServiceImpl;
 
@@ -14,7 +15,7 @@ import java.io.IOException;
 )
 
 public class TestFilter implements Filter {
-    private final static Logger logger = Logger.getLogger(TestFilter.class);
+    private final static Logger logger = LoggerFactory.getLogger(TestFilter.class);
     FilterConfig config;
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)

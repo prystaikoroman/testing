@@ -2,7 +2,8 @@ package Controller.Admin.Answer;
 
 import Controller.Command;
 import DAO.AnswerDaoImpl;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.AnswerService;
 import service.AnswerServiceImpl;
 
@@ -19,7 +20,7 @@ import Exception.DBException;
 
 @WebServlet("/adminAnswer")
 public class AdminAnswerServlet extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(AdminAnswerServlet.class);
+    private final static Logger logger = LoggerFactory.getLogger(AdminAnswerServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

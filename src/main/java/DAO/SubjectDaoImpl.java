@@ -2,7 +2,8 @@ package DAO;
 
 import model.Subject;
 import model.User;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.DSInstance;
 
 import javax.sql.DataSource;
@@ -27,7 +28,7 @@ public class SubjectDaoImpl implements SubjectDao {
                     "where id = ?";
     private static final String SQL_DELETE_SUBJECT = "DELETE FROM SUBJECT WHERE id = ?";
     private static final DataSource ds = DSInstance.getInstance().getDs();
-    private static final Logger logger = Logger.getLogger(SubjectDaoImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SubjectDaoImpl.class);
 
 
 

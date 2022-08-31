@@ -5,14 +5,16 @@ import DAO.QuerieDaoImpl;
 import DAO.TestDao;
 import DAO.TestDaoImpl;
 import model.Querie;
-import org.apache.log4j.Logger;
 import Exception.DBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class QuerieServiceImpl implements QuerieService{
-    private final static Logger logger = Logger.getLogger(QuerieServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(QuerieServiceImpl.class);
 
     private final QuerieDao querieDao = new QuerieDaoImpl();
 

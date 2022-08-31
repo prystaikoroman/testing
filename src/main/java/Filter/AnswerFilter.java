@@ -2,7 +2,8 @@ package Filter;
 
 import Controller.Admin.Answer.AdminAnswerCommandContainer;
 import Controller.Command;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.AnswerService;
 import service.AnswerServiceImpl;
 
@@ -16,7 +17,7 @@ import java.io.IOException;
 )
 
 public class AnswerFilter implements Filter {
-    private final static Logger logger = Logger.getLogger(AnswerFilter.class);
+    private final static Logger logger = LoggerFactory.getLogger(AnswerFilter.class);
     FilterConfig config;
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)

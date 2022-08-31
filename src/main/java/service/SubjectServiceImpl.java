@@ -5,14 +5,16 @@ import DAO.SubjectDaoImpl;
 import DAO.UserDao;
 import DAO.UserDaoImpl;
 import model.Subject;
-import org.apache.log4j.Logger;
 import Exception.DBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class SubjectServiceImpl implements SubjectService{
-    private final static Logger logger = Logger.getLogger(SubjectServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(SubjectServiceImpl.class);
 
     private final SubjectDao subjectDao = new SubjectDaoImpl();
 

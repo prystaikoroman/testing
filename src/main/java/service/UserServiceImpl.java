@@ -4,14 +4,15 @@ import Controller.Admin.User.AddUser;
 import DAO.UserDao;
 import DAO.UserDaoImpl;
 import model.User;
-import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import Exception.DBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UserServiceImpl implements UserService{
-    private final static Logger logger = Logger.getLogger(UserServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserDao userDao = new UserDaoImpl();
     @Override

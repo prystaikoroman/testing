@@ -2,7 +2,8 @@ package Controller.Admin.Answer;
 
 import Controller.Command;
 import DAO.QuerieDaoImpl;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.AnswerService;
 import service.AnswerServiceImpl;
 
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import Exception.DBException;
 
 public class DeleteAnswer implements Command {
-    private final static Logger logger = Logger.getLogger(DeleteAnswer.class);
+    private final static Logger logger = LoggerFactory.getLogger(DeleteAnswer.class);
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) throws DBException {

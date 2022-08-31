@@ -8,7 +8,6 @@ import model.Answer;
 import model.Querie;
 import model.User;
 import model.User_Test_Answer;
-import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -19,13 +18,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 import Exception.DBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.DSInstance;
 
 public class AnswerServiceImpl implements AnswerService {
     public AnswerServiceImpl() {
     }
 
-    private final static Logger logger = Logger.getLogger(QuerieServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(QuerieServiceImpl.class);
 
     private static final DataSource ds = DSInstance.getInstance().getDs();
     private final AnswerDao answerDao = new AnswerDaoImpl();

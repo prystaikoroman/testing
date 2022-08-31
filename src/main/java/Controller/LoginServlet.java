@@ -4,8 +4,9 @@ import Controller.Admin.Answer.AdminAnswerCommandContainer;
 import DAO.LoginDao;
 import DAO.UserDaoImpl;
 import DTO.LoginDto;
-import org.apache.log4j.Logger;
 
+
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,10 +17,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import Exception.DBException;
 import Exception.AuthException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(LoginServlet.class);
+    private final static Logger logger = LoggerFactory.getLogger(LoginServlet.class);
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {

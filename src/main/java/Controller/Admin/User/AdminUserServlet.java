@@ -3,7 +3,8 @@ package Controller.Admin.User;
 import Controller.Command;
 import DAO.UserDaoImpl;
 import model.User;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.UserService;
 import service.UserServiceImpl;
 
@@ -21,7 +22,7 @@ import Exception.DBException;
 
 @WebServlet("/adminUser")
 public class AdminUserServlet extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(AdminUserServlet.class);
+    private final static Logger logger = LoggerFactory.getLogger(AdminUserServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

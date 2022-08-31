@@ -1,6 +1,6 @@
 package util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 public class EmptyResources {
     public static void close(AutoCloseable closable, Logger logger) {

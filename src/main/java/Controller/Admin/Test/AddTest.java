@@ -2,7 +2,8 @@ package Controller.Admin.Test;
 
 import Controller.Command;
 import model.Test;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.TestService;
 import service.TestServiceImpl;
 
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import Exception.DBException;
 
 public class AddTest implements Command {
-    private final static Logger logger = Logger.getLogger(AddTest.class);
+    private final static Logger logger = LoggerFactory.getLogger(AddTest.class);
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) throws DBException {
         logger.info("entered#execute");

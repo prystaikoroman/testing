@@ -3,7 +3,8 @@ package Controller.Admin.User;
 import Controller.Command;
 import DAO.UserDaoImpl;
 import model.User;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.UserService;
 import service.UserServiceImpl;
 
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.util.Objects;
 import Exception.DBException;
 public class AddUser implements Command {
-    private final static Logger logger = Logger.getLogger(AddUser.class);
+    private final static Logger logger = LoggerFactory.getLogger(AddUser.class);
     String command;
 
     public AddUser() {

@@ -3,7 +3,8 @@ package Controller.Subject;
 import Controller.Command;
 import DAO.SubjectDaoImpl;
 import model.Subject;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.SubjectService;
 import service.SubjectServiceImpl;
 
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import Exception.DBException;
 
 public class EditSubject implements Command {
-    private final static Logger logger = Logger.getLogger(EditSubject.class);
+    private final static Logger logger = LoggerFactory.getLogger(EditSubject.class);
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) throws DBException {

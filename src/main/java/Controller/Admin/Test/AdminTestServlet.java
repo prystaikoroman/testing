@@ -4,7 +4,8 @@ import Controller.Command;
 import DAO.SubjectDaoImpl;
 import DAO.TestDaoImpl;
 import model.User;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.TestService;
 import service.TestServiceImpl;
 
@@ -21,7 +22,7 @@ import Exception.DBException;
 
 @WebServlet("/adminTest")
 public class AdminTestServlet extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(AdminTestServlet.class);
+    private final static Logger logger = LoggerFactory.getLogger(AdminTestServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

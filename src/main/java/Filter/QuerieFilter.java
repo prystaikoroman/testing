@@ -1,7 +1,8 @@
 package Filter;
 
 import model.Querie;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.AnswerService;
 import service.AnswerServiceImpl;
 
@@ -16,7 +17,7 @@ import java.util.List;
 )
 
 public class QuerieFilter implements Filter {
-    private final static Logger logger = Logger.getLogger(QuerieFilter.class);
+    private final static Logger logger = LoggerFactory.getLogger(QuerieFilter.class);
     FilterConfig config;
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)

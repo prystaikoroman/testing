@@ -1,6 +1,8 @@
 package util;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -10,12 +12,13 @@ import javax.sql.DataSource;
 public final class DSInstance {
     private static DSInstance instance;
     DataSource ds = null;
-    private final static Logger logger = Logger.getLogger(DSInstance.class);
+    private final static Logger logger = LoggerFactory.getLogger(DSInstance.class);
     private DSInstance(){
         try {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
             ds = (DataSource) envContext.lookup("jdbc/TestDB");
+            logger.trace("context.setAttribute 'dataSource': {}", ds.getClass().getName());
         } catch (NamingException e) {
             logger.error(e.getMessage());
         }

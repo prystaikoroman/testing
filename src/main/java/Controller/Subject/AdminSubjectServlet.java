@@ -3,7 +3,9 @@ package Controller.Subject;
 import Controller.Command;
 import DAO.SubjectDaoImpl;
 import DAO.UserDaoImpl;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.SubjectService;
 import service.SubjectServiceImpl;
 
@@ -20,7 +22,7 @@ import Exception.DBException;
 
 @WebServlet("/adminSubject")
 public class AdminSubjectServlet extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(AdminSubjectServlet.class);
+    private final static Logger logger = LoggerFactory.getLogger(AdminSubjectServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,10 +33,11 @@ public class AdminSubjectServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.info("entered#doGet command ==>" + req.getParameter("command"));
+        ServletContext servletContext = getServletContext();
         process(req, resp);
     }
 
-    private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.info("entered#process");
         ServletContext servletContext = getServletContext();
 

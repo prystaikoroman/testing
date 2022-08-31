@@ -2,7 +2,8 @@ package DAO;
 
 import model.Test;
 import model.User_Test;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.DSInstance;
 
 import javax.sql.DataSource;
@@ -17,7 +18,7 @@ import static util.EmptyResources.close;
 
 public class TestDaoImpl implements TestDao {
     private static final DataSource ds = DSInstance.getInstance().getDs();
-    private static final Logger logger = Logger.getLogger(TestDaoImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(TestDaoImpl.class);
     private static final String SQL_SELECT_ALL_TEST = "SELECT * FROM TEST WHERE subject_id = ?  LIMIT ?, ?";
     private static final String SQL_SELECT_ALL_USER_TEST =
             "SELECT * FROM TEST as t left outer join USER_TEST ut on ut.test_id = t.id and ut.user_id =? WHERE subject_id = ?   LIMIT ?, ?";

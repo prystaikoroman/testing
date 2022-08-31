@@ -3,7 +3,7 @@ package Controller;
 import DAO.LoginDao;
 import DAO.UserDaoImpl;
 import DTO.LoginDto;
-import org.apache.log4j.Logger;
+
 import Exception.AuthException;
 
 import javax.servlet.ServletContext;
@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import Exception.DBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Login implements Command {
-    private final static Logger logger = Logger.getLogger(Login.class);
+    private final static Logger logger = LoggerFactory.getLogger(Login.class);
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) throws IOException {

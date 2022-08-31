@@ -10,15 +10,19 @@ import model.User_Test;
 import Exception.DBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.DSInstance;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class TestServiceImpl implements TestService{
     private final static Logger logger = LoggerFactory.getLogger(TestServiceImpl.class);
-
+    private static final DataSource ds = DSInstance.getInstance().getDs();
     private final TestDao testDao = new TestDaoImpl();
     @Override
     public Test findById(HttpServletRequest req, HttpServletResponse resp) {
@@ -90,7 +94,32 @@ public class TestServiceImpl implements TestService{
 
     @Override
     public List<Test> getAllUserTests(int user_Id, int subject_id, int currentPage, int numOfRecords) throws DBException {
-        return testDao.getAllUserTests(user_Id, subject_id, currentPage, numOfRecords);
+        Connection con = null;
+        List<Test> allUserTests = null;
+        try {
+            con = ds.getConnection();
+            con.setAutoCommit(false);
+
+
+            testDao.User_Tests_Result(con, user_Id);
+            allUserTests = testDao.getAllUserTests(con, user_Id, subject_id, currentPage, numOfRecords);
+
+
+            con.commit();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DBException();
+        }finally {
+            if(con!=null){
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    logger.error(e.getMessage());
+                    throw new DBException();
+                }
+            }
+        }
+        return allUserTests;
     }
 
     @Override

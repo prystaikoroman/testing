@@ -99,6 +99,10 @@ Welcome ${login}
                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                 ></td>
                 <%if ((request.getSession(false).getAttribute("Admin") == null)) {%>
+                <td><input type="text" name="percent_result" value="${test.percent_result}"
+                           readonly
+                ></td>
+
                 <td><input type="checkbox" name="finished"
                            onclick="return false;"
                 <c:if test="${test.finished == 'true'}">

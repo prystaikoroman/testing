@@ -15,6 +15,43 @@ public class Test {
 
 private Date  started;
 private boolean finished;
+private double percent_result;
+
+    public double getPercent_result() {
+        return percent_result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Test test = (Test) o;
+        return id == test.id && difficulty == test.difficulty && passingTimeMin == test.passingTimeMin && subject_id == test.subject_id && finished == test.finished && Double.compare(test.percent_result, percent_result) == 0 && Objects.equals(task, test.task) && Objects.equals(name, test.name) && Objects.equals(started, test.started);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, task, name, difficulty, passingTimeMin, subject_id, started, finished, percent_result);
+    }
+
+    @Override
+    public String toString() {
+        return "Test{" +
+                "id=" + id +
+                ", task='" + task + '\'' +
+                ", name='" + name + '\'' +
+                ", difficulty=" + difficulty +
+                ", passingTimeMin=" + passingTimeMin +
+                ", subject_id=" + subject_id +
+                ", started=" + started +
+                ", finished=" + finished +
+                ", percent_result=" + percent_result +
+                '}';
+    }
+
+    public void setPercent_result(double percent_result) {
+        this.percent_result = percent_result;
+    }
 
     public Date getStarted() {
 //        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -82,28 +119,4 @@ private boolean finished;
         this.subject_id = subject_id;
     }
 
-    @Override
-    public String toString() {
-        return "Test{" +
-                "id=" + id +
-                ", task='" + task + '\'' +
-                ", name='" + name + '\'' +
-                ", difficulty=" + difficulty +
-                ", passingTimeMin=" + passingTimeMin +
-                ", subject_id=" + subject_id +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Test test = (Test) o;
-        return id == test.id && difficulty == test.difficulty && passingTimeMin == test.passingTimeMin && subject_id == test.subject_id && task.equals(test.task) && name.equals(test.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, task, name, difficulty, passingTimeMin, subject_id);
-    }
 }

@@ -39,7 +39,8 @@ public class AnswerDaoImpl implements AnswerDao {
     private static final String SQL_DELETE_ANSWER = "DELETE FROM ANSWER WHERE id = ?";
     private static final DataSource ds = DSInstance.getInstance().getDs();
     private static final Logger logger = LoggerFactory.getLogger(AnswerDaoImpl.class);
-    private static final String SQL_SELECT_ALL_ANSWER_USER_SUBMITION = "SELECT *.a,  FROM ANSWER a LEFT OUTER JOIN user_test_answer WHERE querie_id = ?  LIMIT ?, ?";
+    private static final String SQL_SELECT_ALL_ANSWER_USER_SUBMITION =
+                    " SELECT *  FROM ANSWER a LEFT OUTER JOIN user_test_answer  uta on a.id = uta.answer_id WHERE querie_id = ?  LIMIT ?, ?";
 
     @Override
     public Answer findById(int id) {

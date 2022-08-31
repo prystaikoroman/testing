@@ -14,9 +14,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
           crossorigin="anonymous">
+<script language="JavaScript">
 
+        function setLanguage(){
+
+            session.setAttribute("userName",userName);
+            <a href="result.jsp">Result jsp page</a>
+        };
+</script>
+    <lable onclick="setLanguage(this)">EN</lable>
+    <lable>UA</lable>
     <title>Please login!</title>
     <form name="form" action="<%=request.getContextPath()%>/LoginServlet?command=login" method="post">
+
         <table class="table" >
             <tr>
                 <td>login</td>

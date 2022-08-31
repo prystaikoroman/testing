@@ -38,6 +38,8 @@
     </script>
 </head>
 <body>
+<%--<c:set var="theUltimateAnswer" value="${41+1}" scope="session"  />--%>
+
 <div style="text-align: center;"><h2>User Maneger</h2></div>
 
 <%--Welcome <%=request.getAttribute("login") %>--%>

@@ -58,18 +58,15 @@ public class AdminUserServlet extends HttpServlet {
 
             if (!commandName.equals("registerUser")) {
 
-                session.setAttribute("Admin", session.getAttribute("login"));
-
+                session.setAttribute("Admin", session.getAttribute("Admin"));
                 servletContext.setAttribute("login", session.getAttribute("Admin"));
-
+                servletContext.setAttribute("Admin", session.getAttribute("Admin"));
                 User adminUser = userService.findByLogin((String) session.getAttribute("Admin"));
                 Integer numberOfRows = userService.getNumberOfRows();
                 Integer nOfPages = (double) (numberOfRows / recordsPerPage) < 1 ? 1 : numberOfRows / recordsPerPage + ((numberOfRows % recordsPerPage) > 0 ? 1 : 0);
-
 //            servletContext.setAttribute("Admin", session.getAttribute("Admin"));
                 servletContext.setAttribute("users", userService.getAllUser(adminUser.getId(), currentPage,
                         recordsPerPage));
-
                 logger.info("noOfPages=" + nOfPages + " currentPage=" + currentPage + " recordsPerPage=" + recordsPerPage);
                 servletContext.setAttribute("noOfPages", nOfPages);
                 servletContext.setAttribute("currentPage", currentPage);

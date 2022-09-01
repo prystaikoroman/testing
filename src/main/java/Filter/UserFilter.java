@@ -1,6 +1,8 @@
 package Filter;
 
 import Controller.Admin.User.AdminUserServlet;
+import DAO.UserDao;
+import DAO.UserDaoImpl;
 import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import Exception.DBException;
 
 @WebFilter(urlPatterns = {"/adminUser"} //, initParams = { @WebInitParam(name = "active", value = "xxx") }
 )
@@ -24,22 +27,26 @@ public class UserFilter implements Filter {
             throws IOException, ServletException {
         logger.info("entered#doFilter");
         //        if (config.getInitParameter("active").equalsIgnoreCase("true")) {
-
+        String login = req.getParameter("login");
         System.out.println("Filter sets attribute.");
         String commandName = req.getParameter("command");
         HttpServletRequest httpReq = (HttpServletRequest) req;
         HttpSession session = httpReq.getSession();//create session
+        UserDao userDao= new UserDaoImpl();
 
-        if (!commandName.equals("registerUser")) {
+            if (!commandName.equals("registerUser")) {
 
-            config.getServletContext().setAttribute("login", session.getAttribute("Admin"));
-            config.getServletContext().setAttribute("Admin", session.getAttribute("Admin"));
+                config.getServletContext().setAttribute("login", session.getAttribute("Admin"));
+                config.getServletContext().setAttribute("Admin", session.getAttribute("Admin"));
+//                session.setAttribute("Admin", login);
+//                session.setAttribute("AdminUser", userDao.findByLogin(login));
+            } else {
+                config.getServletContext().setAttribute("login", req.getParameter("login"));
+                config.getServletContext().setAttribute("password", req.getParameter("password"));
 
-        } else {
-            config.getServletContext().setAttribute("login", req.getParameter("login"));
-            config.getServletContext().setAttribute("password", req.getParameter("password"));
+            }
 
-        }
+
 
 //            config.getServletContext().setAttribute("Attribute", "Value");
 //        }

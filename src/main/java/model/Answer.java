@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Answer {
+public class Answer implements Serializable {
     private int id;
     private String answer;
     private boolean correct;

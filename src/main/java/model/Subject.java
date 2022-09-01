@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Subject {
+public class Subject  implements Serializable {
     private int id;
     private String name;
 

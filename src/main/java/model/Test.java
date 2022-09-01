@@ -1,11 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
-public class Test {
+public class Test  implements Serializable {
     private int id;
     private String task;
     private String name;

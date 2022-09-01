@@ -1,9 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class User_Test_Answer {
+public class User_Test_Answer  implements Serializable {
     private int user_test_user_id;
     private int user_test_test_id;
     private int answer_id;

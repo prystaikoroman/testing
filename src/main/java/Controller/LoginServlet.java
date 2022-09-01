@@ -24,6 +24,11 @@ import org.slf4j.LoggerFactory;
 public class LoginServlet extends HttpServlet {
     private final static Logger logger = LoggerFactory.getLogger(LoginServlet.class);
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.info("entered#doGet command ==>" + req.getParameter("command"));
+        process(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {

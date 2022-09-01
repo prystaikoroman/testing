@@ -13,27 +13,46 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
           crossorigin="anonymous">
 
-    <title>Registration</title>
+    <title>
+        <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  )
+        { %>Registration<%} else { %>Реєстрація<%} %>
+        </title>
 
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/adminUser?recordsPerPage=15&currentPage=1"
       method="post">
-    <div align="center"> <h1>New User: </h1>
+    <div align="center">
+        <h1>
+        <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  )
+        { %>New User:<%} else { %>Новий користувач:<%} %>
+    </h1>
         <input type="hidden" name="command" value="registerUser">
         <input type="hidden" name="admin" value="0">
         <input type="hidden" name="locked" value="0">
 
-        <label for="login">Login :</label> <br>
+        <label for="login">
+            <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  )
+            { %>Login :<%} else { %>Логін :<%} %>
+            </label> <br>
         <input id="login" type="text" name="login"> <br>
 
-        <label for="email"> Email :</label> <br>
+        <label for="email">
+            <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  )
+            { %>Email :<%} else { %>Електронна скринька :<%} %>
+            </label> <br>
         <input id="email" type="text" name="email"> <br>
 
-        <label for="lastname">Lastname :</label> <br>
+        <label for="lastname">
+            <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  )
+            { %>Lastname :<%} else { %>Прізвище :<%} %>
+            </label> <br>
         <input id="lastname" type="text" name="lastname"> <br>
 
-         <label for="pw">Password :</label> <br>
+         <label for="pw">
+             <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  )
+             { %>Password :<%} else { %>Пароль :<%} %>
+             </label> <br>
         <input id="pw" type="password" name="password"> <br>
 
         <input type="submit" value="register">

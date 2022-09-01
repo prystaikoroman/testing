@@ -61,6 +61,7 @@ Welcome ${login}
         <td><label>Name</label></td>
         <td><label>Difficulty</label></td>
         <td><label>Passing Time (minute)</label></td>
+        <td><label>result</label></td>
         <td><label>finished</label></td>
     </tr>
 

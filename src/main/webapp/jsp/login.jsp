@@ -14,26 +14,63 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
           crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script language="JavaScript">
+        function setLanguageEN(){
+            console.log("jkjhk");
+            $.ajax({
+                type: 'GET',
+                url: 'AjaxLanguageSetServlet?',
+                data: { language : "EN"  },
+                success    : function(resultText){
+                    $('#result').html(resultText);
+                },
+                error : function(jqXHR, exception) {
+                    console.log('Error occured!!');
+                }
+            });
+            location.reload(true);
+        }
 
-        function setLanguage(){
-
-            session.setAttribute("userName",userName);
-            <a href="result.jsp">Result jsp page</a>
-        };
+    function setLanguageUA(){
+        console.log('entered!!');
+        $.ajax({
+            type: 'GET',
+            url: 'AjaxLanguageSetServlet',
+            data: { language : "UA"  }
+        });
+        location.reload(true);
+<%--            <%  request.getSession();--%>
+<%--            session.setAttribute("language",value); %>--%>
+<%--            location.reload(true);--%>
+<%--            <jsp:forward page="/jsp/login.jsp"></jsp:forward>--%>
+        }
 </script>
-    <lable onclick="setLanguage(this)">EN</lable>
-    <lable>UA</lable>
-    <title>Please login!</title>
+    <lable onclick="setLanguageEN()">EN</lable>
+    <lable onclick="setLanguageUA()">UA</lable>
+    <title>
+        <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  ) { %>
+        Please login!
+        <%} else { %>
+        Будь ласка авторизуйтеся!
+        <%} %>
+    </title>
     <form name="form" action="<%=request.getContextPath()%>/LoginServlet?command=login" method="post">
 
         <table class="table" >
             <tr>
-                <td>login</td>
+                <td>
+                    <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  )
+                    { %>login<%} else { %>логін<%} %>
+                    </td>
                 <td><input type="text" name="login" value="${login}"/></td>
             </tr>
             <tr>
-                <td>password</td>
+                <td>
+                    <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  )
+                    { %>password<%} else { %>пароль<%} %>
+                </td>
                 <td><input type="password" name="password" value="${password}"/></td>
             </tr>
             <tr>
@@ -48,7 +85,11 @@
         </table>
     </form>
     <div style="text-align: center">
-        <h2><a href="<%=request.getContextPath()%>/LoginServlet?command=register">registration</a></h2>
+<%--        <h2><a href="<%=request.getContextPath()%>/LoginServlet?command=register">--%>
+        <h2><a href="${pageContext.request.contextPath}/jsp/registration.jsp">
+            <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  )
+            { %>registration<%} else { %>реєстрація<%} %>
+        </a></h2>
     </div>
 </head>
 <body>

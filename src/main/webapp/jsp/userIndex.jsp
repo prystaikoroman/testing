@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="/WEB-INF/custom.tld" prefix="m" %>
 <html>
 <head>
     <title>User Page</title>
@@ -24,7 +25,8 @@
 <body>
 <div style="text-align: center;"><h2>User's Home</h2></div>
 Welcome ${login}
-
+<br>
+Current Date and Time is: <m:today/>
 <div style="text-align: center">
     <h2><a href="<%=request.getContextPath()%>/adminSubject?command=index&recordsPerPage=5&currentPage=1">Subject for pass</a></h2>
 </div>

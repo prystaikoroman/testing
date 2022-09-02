@@ -41,7 +41,7 @@ public class UserFilter implements Filter {
 //                session.setAttribute("Admin", login);
 //                session.setAttribute("AdminUser", userDao.findByLogin(login));
             } else {
-                config.getServletContext().setAttribute("login", req.getParameter("login"));
+                config.getServletContext().setAttribute("login", req.getParameter("User"));
                 config.getServletContext().setAttribute("password", req.getParameter("password"));
 
             }

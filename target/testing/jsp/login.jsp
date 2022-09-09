@@ -18,7 +18,7 @@
 
 <script language="JavaScript">
         function setLanguageEN(){
-            console.log("jkjhk");
+            console.log('entered!!');
             $.ajax({
                 type: 'GET',
                 url: 'AjaxLanguageSetServlet?',
@@ -46,6 +46,35 @@
 <%--            location.reload(true);--%>
 <%--            <jsp:forward page="/jsp/login.jsp"></jsp:forward>--%>
         }
+
+        function validateFields()
+        {
+            if((document.getElementsById('login').value.trim()!="")
+                &&(document.getElementsById('login').value.length>=4)
+                &&(document.getElementsById('password').value.length>=8)
+                )
+            {
+                //additional validation on server side
+                $.ajax({
+                    type: 'GET',
+                    url: 'AjaxLoginValidation?',
+                    data: { login : document.getElementsById('login').value  },
+                    success    : function(resultText){
+                        $('#result').html(resultText);
+                    },
+                    error : function(jqXHR, exception) {
+                        console.log('Error occured!!');
+                    }
+                });
+
+            }
+        else
+            {
+                alert("validation failed");
+                event.preventDefault();
+                return false;
+            }
+        } //end of function
 </script>
     <lable onclick="setLanguageEN()">EN</lable>
     <lable onclick="setLanguageUA()">UA</lable>
@@ -56,7 +85,7 @@
         Будь ласка авторизуйтеся!
         <%} %>
     </title>
-    <form name="form" action="<%=request.getContextPath()%>/LoginServlet?command=login" method="post">
+    <form name="form" action="<%=request.getContextPath()%>/LoginServlet?command=login" onsubmit="validateFields()" method="post">
 
         <table class="table" >
             <tr>
@@ -64,14 +93,14 @@
                     <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  )
                     { %>login<%} else { %>логін<%} %>
                     </td>
-                <td><input type="text" name="login" value="${login}"/></td>
+                <td><input type="text" id="login" name="login" value="${login}"/></td>
             </tr>
             <tr>
                 <td>
                     <% if (session.getAttribute("language")!= null && session.getAttribute("language").equals("EN")  )
                     { %>password<%} else { %>пароль<%} %>
                 </td>
-                <td><input type="password" name="password" value="${password}"/></td>
+                <td><input type="password" id="password" name="password" value="${password}"/></td>
             </tr>
             <tr>
                 <td><span class="span" ><%=(request.getAttribute("errMessage") == null) ? "" : request.getAttribute("errMessage")%></span></td>
@@ -79,7 +108,8 @@
             <tr>
                 <td></td>
                 <td><input type="submit" value="Login"></input>
-                    <input type="reset" value="Reset"></input></td>
+                    <input type="reset" value="Reset"></input>
+                </td>
             </tr>
 
         </table>

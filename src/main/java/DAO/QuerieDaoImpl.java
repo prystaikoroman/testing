@@ -1,23 +1,23 @@
 package DAO;
 
 import model.Querie;
-import model.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.DSInstance;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
+
 import Exception.DBException;
 
 import static util.EmptyResources.close;
 
 public class QuerieDaoImpl implements QuerieDao {
+    DataSource ds = null;
     private static final String SQL_SELECT_ALL_QUERIE = "SELECT * FROM QUERIE WHERE test_id = ?  LIMIT ?, ?";
     private static final String SQL_SELECT_QUERIE_ROWS_COUNT = "SELECT COUNT(id) AS cnt FROM QUERIE";
+    private static final String SQL_SELECT_TEST_QUERIES_ROWS_COUNT = "SELECT COUNT(id) AS cnt FROM QUERIE Where test_id = ?";
     private static final String SQL_INSERT_INTO_QUERIE =
             "INSERT into QUERIE  " +
                     "(question, test_id) " +
@@ -28,8 +28,12 @@ public class QuerieDaoImpl implements QuerieDao {
                     "question = ? " +
                     "where id = ?";
     private static final String SQL_DELETE_QUERIE = "DELETE FROM QUERIE WHERE id = ?";
-    private static final DataSource ds = DSInstance.getInstance().getDs();
+//    private static final DataSource ds = DSInstance.getInstance().getDs();
     private static final Logger logger = LoggerFactory.getLogger(QuerieDaoImpl.class);
+
+    public QuerieDaoImpl(DataSource ds) {
+        this.ds = ds;
+    }
 
     @Override
     public Querie findById(int id) {
@@ -183,6 +187,36 @@ public class QuerieDaoImpl implements QuerieDao {
             close(rs, logger);
         }
           logger.info("Error in cout select.");
+        return 0;
+    }
+
+    @Override
+    public Integer getTestQueriesNumberOfRows(int id) throws DBException {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        final int count;
+        try {
+            con = ds.getConnection();
+            pstmt = con.prepareStatement(SQL_SELECT_TEST_QUERIES_ROWS_COUNT);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                logger.info("Selected querie count ==> " + rs.getInt("cnt") + " .");
+                return rs.getInt("cnt");
+            }
+
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+            throw new DBException(e.getMessage());
+        } finally {
+            close(con, logger);
+            close(pstmt, logger);
+            close(rs, logger);
+        }
+        logger.info("Error in cout select.");
         return 0;
     }
 

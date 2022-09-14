@@ -31,6 +31,8 @@ public class UserDaoImpl implements UserDao {
     private static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 
 
+    public UserDaoImpl() {
+    }
 
     @Override
     public User findById(int id) {

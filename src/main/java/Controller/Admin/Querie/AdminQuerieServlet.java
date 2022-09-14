@@ -70,7 +70,7 @@ public class AdminQuerieServlet extends HttpServlet {
                 address = command.execute(req, resp, servletContext);
 
             }
-            Integer numberOfRows = querieService.getNumberOfRows();
+            Integer numberOfRows = querieService.getTestQueriesNumberOfRows(Integer.parseInt(req.getParameter("test_Id")));
             nOfPages = (double) (numberOfRows / recordsPerPage) < 1 ? 1 : numberOfRows / recordsPerPage + ((numberOfRows % recordsPerPage) > 0 ? 1 : 0);
 
             servletContext.setAttribute("queries", querieService.getAllQueries(Integer.parseInt(req.getParameter("test_Id")), currentPage,

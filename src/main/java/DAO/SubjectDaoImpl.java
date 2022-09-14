@@ -27,10 +27,13 @@ public class SubjectDaoImpl implements SubjectDao {
                     "name = ?" +
                     "where id = ?";
     private static final String SQL_DELETE_SUBJECT = "DELETE FROM SUBJECT WHERE id = ?";
-    private static final DataSource ds = DSInstance.getInstance().getDs();
+//    private static final DataSource ds = DSInstance.getInstance().getDs();
+    private  DataSource ds = null;
     private static final Logger logger = LoggerFactory.getLogger(SubjectDaoImpl.class);
 
-
+    public SubjectDaoImpl(DataSource ds) {
+        this.ds =ds;
+    }
 
     @Override
     public Subject findById(int id) {

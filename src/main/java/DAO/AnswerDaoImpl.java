@@ -17,6 +17,7 @@ import Exception.DBException;
 import static util.EmptyResources.close;
 
 public class AnswerDaoImpl implements AnswerDao {
+    DataSource ds = null;
     private static final String SQL_SELECT_ALL_ANSWER = "SELECT * FROM ANSWER WHERE querie_id = ?  LIMIT ?, ?";
     private static final String SQL_SELECT_ANSWER_ROWS_COUNT = "SELECT COUNT(id) AS cnt FROM ANSWER";
     private static final String SQL_INSERT_INTO_ANSWER =
@@ -37,10 +38,14 @@ public class AnswerDaoImpl implements AnswerDao {
         "CALL insert_user_test_answer(?, ?, ?, ?, ?)";
 
     private static final String SQL_DELETE_ANSWER = "DELETE FROM ANSWER WHERE id = ?";
-    private static final DataSource ds = DSInstance.getInstance().getDs();
+//    private static final DataSource ds = DSInstance.getInstance().getDs();
     private static final Logger logger = LoggerFactory.getLogger(AnswerDaoImpl.class);
     private static final String SQL_SELECT_ALL_ANSWER_USER_SUBMITION =
                     " SELECT *  FROM ANSWER a LEFT OUTER JOIN user_test_answer  uta on a.id = uta.answer_id WHERE querie_id = ?  LIMIT ?, ?";
+
+    public AnswerDaoImpl(DataSource ds) {
+        this.ds = ds;
+    }
 
     @Override
     public Answer findById(int id) {

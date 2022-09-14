@@ -14,12 +14,15 @@ import Exception.DBException;
 public class LoginDao {
     private static String SQL_SELECT_USER = "select login,password,admin from user";
     private static final Logger logger = LoggerFactory.getLogger(LoginDao.class);
+    DataSource ds = null;
+
+    public LoginDao(DataSource ds) {
+        this.ds = ds;
+    }
 
     public String authenticateUser(LoginDto loginDto) throws AuthException {
         String login = loginDto.getLogin();
         String password = loginDto.getPassword();
-
-        DataSource ds = DSInstance.getInstance().getDs();
 
         Connection con = null;
         Statement statement = null;

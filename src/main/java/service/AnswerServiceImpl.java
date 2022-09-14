@@ -29,7 +29,7 @@ public class AnswerServiceImpl implements AnswerService {
     private final static Logger logger = LoggerFactory.getLogger(QuerieServiceImpl.class);
 
     private static final DataSource ds = DSInstance.getInstance().getDs();
-    private final AnswerDao answerDao = new AnswerDaoImpl();
+    private final AnswerDao answerDao = new AnswerDaoImpl(ds);
 
     @Override
     public Answer findById(int id) {

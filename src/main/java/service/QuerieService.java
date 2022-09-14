@@ -17,4 +17,5 @@ public interface QuerieService {
 
     List<Querie> getAllQueries(int id, int currentPage, int numOfRecords) throws DBException;
     Integer getNumberOfRows() throws DBException;
+    Integer getTestQueriesNumberOfRows(int id) throws DBException;
 }

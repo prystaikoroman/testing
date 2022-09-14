@@ -10,14 +10,16 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 import java.io.IOException;
 import Exception.DBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.DSInstance;
 
 public class Login implements Command {
     private final static Logger logger = LoggerFactory.getLogger(Login.class);
-
+    static DataSource ds = DSInstance.getInstance().getDs();
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) throws IOException {
         String login = req.getParameter("login");
@@ -65,8 +67,8 @@ public class Login implements Command {
         loginDto.setLogin(login);
         loginDto.setPassword(password);
 
-        LoginDao loginDao = new LoginDao();
+        LoginDao loginDao = new LoginDao(ds);
 
-        return loginDao.authenticateUser(loginDto);
+         return loginDao.authenticateUser(loginDto);
     }
 }

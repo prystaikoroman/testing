@@ -8,15 +8,18 @@ import model.Subject;
 import Exception.DBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.DSInstance;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.util.List;
 
 public class SubjectServiceImpl implements SubjectService{
     private final static Logger logger = LoggerFactory.getLogger(SubjectServiceImpl.class);
+    private static final DataSource ds = DSInstance.getInstance().getDs();
 
-    private final SubjectDao subjectDao = new SubjectDaoImpl();
+    private final SubjectDao subjectDao = new SubjectDaoImpl(ds);
 
     @Override
     public Subject findById(int id) {

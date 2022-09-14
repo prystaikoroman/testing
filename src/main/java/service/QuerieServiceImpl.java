@@ -2,21 +2,21 @@ package service;
 
 import DAO.QuerieDao;
 import DAO.QuerieDaoImpl;
-import DAO.TestDao;
-import DAO.TestDaoImpl;
 import model.Querie;
 import Exception.DBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.DSInstance;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.util.List;
 
 public class QuerieServiceImpl implements QuerieService{
     private final static Logger logger = LoggerFactory.getLogger(QuerieServiceImpl.class);
-
-    private final QuerieDao querieDao = new QuerieDaoImpl();
+    DataSource ds = DSInstance.getInstance().getDs();
+    private final QuerieDao querieDao = new QuerieDaoImpl(ds);
 
     @Override
     public Querie findById(int id) {
@@ -56,5 +56,10 @@ public class QuerieServiceImpl implements QuerieService{
     @Override
     public Integer getNumberOfRows() throws DBException {
         return querieDao.getNumberOfRows();
+    }
+
+    @Override
+    public Integer getTestQueriesNumberOfRows(int id) throws DBException {
+        return querieDao.getTestQueriesNumberOfRows(id) ;
     }
 }

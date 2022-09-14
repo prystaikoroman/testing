@@ -31,12 +31,17 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         logger.info("entered#doPost command ==>" + req.getParameter("command"));
         process(req, resp);
     }
 
-        private void process(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
+    protected void process(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
             logger.info("entered#process");
             ServletContext servletContext = getServletContext();
             HttpSession session = req.getSession();//create session

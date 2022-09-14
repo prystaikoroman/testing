@@ -12,15 +12,14 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 class AddSubjectTest {
     private final static Logger logger = LoggerFactory.getLogger(AdminSubjectServlet.class);
 
     @Test
-    @Disabled("TODO: Complete this test")
+    @Disabled("")
     void testExecute() throws DBException {
         ServletOutputStream outputStream =  mock(ServletOutputStream.class);
         ServletConfig servletConfig =  mock(ServletConfig.class);
@@ -35,7 +34,7 @@ class AddSubjectTest {
         String actualExecuteResult = addSubject.execute(request, response, servletContext);
         // Assert
 //        verify(req, times(1)).getRequestDispatcher("/jsp/admSubjectMenager.jsp") ;
-//        verify(req, times(1)).getSession();
+        verify(request, times(1)).getSession();
 //        verify(resp).sendRedirect("/jsp/admSubjectMenager.jsp");
 
 

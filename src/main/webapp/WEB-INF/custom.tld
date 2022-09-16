@@ -12,6 +12,6 @@
 
     <tag>
         <name>today</name>
-        <tag-class>tags.MyTagHandler</tag-class>
+        <tag-class>com.testing.tags.MyTagHandler</tag-class>
     </tag>
 </taglib>

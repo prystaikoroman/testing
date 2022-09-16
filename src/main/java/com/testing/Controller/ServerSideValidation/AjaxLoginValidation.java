@@ -1,0 +1,35 @@
+package com.testing.Controller.ServerSideValidation;
+
+import com.testing.Controller.LoginServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.testing.service.UserService;
+import com.testing.service.UserServiceImpl;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import com.testing.Exception.DBException;
+
+@WebServlet("/AjaxLoginValidation")
+public class AjaxLoginValidation extends HttpServlet {
+    private final static Logger logger = LoggerFactory.getLogger(LoginServlet.class);
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();//create session
+        UserService userService = new UserServiceImpl();
+        String address;
+        try {
+            userService.findByLogin(req.getParameter("login"));
+        } catch (DBException e) {
+            logger.error(e.getMessage());
+            session.setAttribute("errMessage", e.getMessage());
+            address = req.getContextPath() + "/jsp/authError.jsp";
+            resp.sendRedirect(address);
+        }
+    }
+}

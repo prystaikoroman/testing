@@ -1,0 +1,27 @@
+package com.testing.Controller.Admin.Querie;
+
+import com.testing.Controller.Command;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.testing.service.QuerieService;
+import com.testing.service.QuerieServiceImpl;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.testing.Exception.DBException;
+
+public class EditQuerie implements Command {
+    private final static Logger logger = LoggerFactory.getLogger(EditQuerie.class);
+
+    @Override
+    public String execute(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) throws DBException {
+        logger.info("entered#execute");
+        QuerieService querieService = new QuerieServiceImpl();
+
+//        logger.info("locked ==> " + req.getParameter("locked").equals("on"));
+        querieService.update( req, resp);
+
+        return req.getContextPath()+"/jsp/admQuerieMenager.jsp";
+    }
+}
